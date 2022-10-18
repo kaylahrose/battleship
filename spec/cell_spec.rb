@@ -50,5 +50,23 @@ RSpec.describe Cell do
             cell.ship
             expect(cell.empty?).to eq(false)
         end 
+
+        it 'returns if fired at' do
+            cell = Cell.new("B4")
+            cruiser = Ship.new("Cruiser", 3)
+            cell.place_ship(cruiser)
+            expect(cell.fired_upon?).to eq(false)
+
+            cell.fire_upon
+            expect(cell.fired_upon?).to eq(true)
+        end
+
+        it 'it reduces ships health when fired at' do
+            cell = Cell.new("B4")
+            cruiser = Ship.new("Cruiser", 3)
+            cell.place_ship(cruiser)
+            cell.fire_upon
+            expect(cell.ship.health).to eq(2)
+        end
     end
 end
