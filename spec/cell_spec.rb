@@ -26,7 +26,7 @@ RSpec.describe Cell do
             expect(cell.empty?).to eq(true)
         end
 
-        it 'is an instance of the Ship class'
+        it 'is an instance of the Ship class' do
             cruiser = Ship.new("Cruiser", 3)
             expect(cruiser).to be_an_instance_of(Ship)
         end
