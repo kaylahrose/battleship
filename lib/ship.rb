@@ -7,6 +7,10 @@ class Ship
     end
 
     def sunk?
-        @health.positive?
+        @health <= 0
+    end
+
+    def hit
+        
     end
 end
