@@ -51,7 +51,8 @@ class Board
         # if the numbers in the array are all the same    
         elsif number.uniq.size <= 1
             # check if the letters go in order
-            letter[-1].to_i == letter[0].to_i + (letter.length - 1)
+            # require 'pry'; binding.pry
+            letter[-1].ord == letter[0].ord + (letter.length - 1)
         else
             false
         end
