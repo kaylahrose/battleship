@@ -46,11 +46,16 @@ class Board
         end
         # if the letters in the array are all the same
         # require 'pry'; binding.pry
-        letter.sort!
-        number.sort!
+        # letter.sort!
+        # number.sort!
+
         if letter.uniq.size <= 1
             # check if the numbers count in order
-            number[-1].to_i == number[0].to_i + (number.length - 1)
+            if number == number.sort
+              number[-1].to_i == number[0].to_i + (number.length - 1)
+            else
+              false
+            end
         # if the numbers in the array are all the same
         elsif number.uniq.size <= 1
             # check if the letters go in order
