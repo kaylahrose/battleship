@@ -1,25 +1,80 @@
+require './lib/ship'
+require './lib/cell'
 require './lib/board'
 
 RSpec.describe Board do
-  board = Board.new
-# => #<Board:0x00007ff0728c8010...>
-board.cells
-# =>
-{
- "A1" => #<Cell:0x00007ff0728a3f58...>,
- "A2" => #<Cell:0x00007ff0728a3ee0...>,
- "A3" => #<Cell:0x00007ff0728a3e68...>,
- "A4" => #<Cell:0x00007ff0728a3df0...>,
- "B1" => #<Cell:0x00007ff0728a3d78...>,
- "B2" => #<Cell:0x00007ff0728a3d00...>,
- "B3" => #<Cell:0x00007ff0728a3c88...>,
- "B4" => #<Cell:0x00007ff0728a3c10...>,
- "C1" => #<Cell:0x00007ff0728a3b98...>,
- "C2" => #<Cell:0x00007ff0728a3b20...>,
- "C3" => #<Cell:0x00007ff0728a3aa8...>,
- "C4" => #<Cell:0x00007ff0728a3a30...>,
- "D1" => #<Cell:0x00007ff0728a39b8...>,
- "D2" => #<Cell:0x00007ff0728a3940...>,
- "D3" => #<Cell:0x00007ff0728a38c8...>,
- "D4" => #<Cell:0x00007ff0728a3850...>
-}
+  it 'exists' do
+    # require 'pry'; binding.pry
+    board = Board.new
+    # require 'pry'; binding.pry
+
+    expect(board).to be_an_instance_of(Board)
+  end
+
+  it 'has an hash of cells' do
+    board = Board.new
+
+    # It’s a hash, it should have 16 key/value pairs, and those keys point to cell objects.
+    expect(board.cells).to be_an_instance_of(Hash)
+    expect(board.cells.keys.length).to eq(16)
+    board.cells.values.each { |cell| expect(cell).to be_an_instance_of(Cell)}
+  end
+
+
+  it 'validates coordinates' do
+    board = Board.new
+
+    expect(board.valid_coordinate?("A1")).to eq(true)
+    # require 'pry'; binding.pry
+    expect(board.valid_coordinate?("D4")).to eq(true)
+    # require 'pry'; binding.pry
+    expect(board.valid_coordinate?("A5")).to eq(false)
+    # require 'pry'; binding.pry
+    expect(board.valid_coordinate?("E1")).to eq(false)
+    # require 'pry'; binding.pry
+    expect(board.valid_coordinate?("A22")).to eq(false)
+    # require 'pry'; binding.pry
+  end
+
+  it 'validates placement by array length' do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    # expect the number of coordinates in the array should be the same as the length of the ship
+    expect(board.valid_placement?(cruiser, ["A1", "A2"])).to eq(false)
+    expect(board.valid_placement?(submarine, ["A2", "A3", "A4"])).to eq(false)
+  end
+
+  it 'validates placement with consecutive coordinates' do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    board.valid_placement?(cruiser, ["A1", "A2", "A4"])
+    # require 'pry'; binding.pry
+
+    expect(board.valid_placement?(cruiser, ["A1", "A2", "A4"])).to eq(false)
+    expect(board.valid_placement?(submarine, ["A1", "C1"])).to eq(false)
+    expect(board.valid_placement?(cruiser, ["A3", "A2", "A1"])).to eq(false)
+    expect(board.valid_placement?(submarine, ["C1", "B1"])).to eq(false)
+  end
+
+  it 'validates placement no diagonal coordinates' do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    expect(board.valid_placement?(cruiser, ["A1", "B2", "C3"])).to eq(false)
+    expect(board.valid_placement?(submarine, ["C2", "D3"])).to eq(false)
+  end
+
+  it 'validates placement example true' do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    expect(board.valid_placement?(cruiser, ["B1", "C1", "D1"])).to eq(true)
+    expect(board.valid_placement?(submarine, ["A1", "A2"])).to eq(true)
+  end
+
+end
