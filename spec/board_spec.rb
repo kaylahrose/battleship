@@ -20,14 +20,19 @@ RSpec.describe Board do
     board.cells.values.each { |cell| expect(cell).to be_an_instance_of(Cell)}
   end
 
-  
+
   it 'validates coordinates' do
     board = Board.new
 
     expect(board.valid_coordinate?("A1")).to eq(true)
+    # require 'pry'; binding.pry
     expect(board.valid_coordinate?("D4")).to eq(true)
+    # require 'pry'; binding.pry
     expect(board.valid_coordinate?("A5")).to eq(false)
+    # require 'pry'; binding.pry
     expect(board.valid_coordinate?("E1")).to eq(false)
+    # require 'pry'; binding.pry
     expect(board.valid_coordinate?("A22")).to eq(false)
+    # require 'pry'; binding.pry
   end
 end
