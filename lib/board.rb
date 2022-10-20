@@ -60,7 +60,11 @@ class Board
         elsif number.uniq.size <= 1
             # check if the letters go in order
             # require 'pry'; binding.pry
-            letter[-1].ord == letter[0].ord + (letter.length - 1)
+            if letter == letter.sort
+              letter[-1].ord == letter[0].ord + (letter.length - 1)
+            else
+              false
+            end
         else
             false
         end
