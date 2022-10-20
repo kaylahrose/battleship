@@ -32,4 +32,7 @@ class Board
     end
     # require 'pry'; binding.pry
   end
+
+  def valid_placement?(ship, coordinate_array)
+  end
 end

@@ -35,4 +35,14 @@ RSpec.describe Board do
     expect(board.valid_coordinate?("A22")).to eq(false)
     # require 'pry'; binding.pry
   end
+
+  it 'validates placement' do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    # expect the number of coordinates in the array should be the same as the length of the ship
+    expect(board.valid_placement?(cruiser, ["A1", "A2"])).to eq(false)
+    expect(board.valid_placement?(submarine, ["A2", "A3", "A4"])).to eq(false)
+  end
 end
