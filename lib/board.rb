@@ -36,17 +36,21 @@ class Board
   def valid_placement?(ship, coordinate_array)
     # require 'pry'; binding.pry
     if coordinate_array.length == ship.length 
-        # require 'pry'; binding.pry
+        # iterate through coordinates and shovel letter into one array and numbers into number array
+
         letter = []
         number = []
         coordinate_array.each do |coordinate|
             letter << coordinate[0]
             number << coordinate[1]
         end
-        # require 'pry'; binding.pry
+        # if the letters in the array are all the same
         if letter.uniq.size <= 1
+            # check if the numbers count in order
             number[-1].to_i == number[0].to_i + (number.length - 1)
+        # if the numbers in the array are all the same    
         elsif number.uniq.size <= 1
+            # check if the letters go in order
             letter[-1].to_i == letter[0].to_i + (letter.length - 1)
         else
             false
