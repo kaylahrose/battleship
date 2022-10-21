@@ -92,6 +92,8 @@ RSpec.describe Board do
     expect(cell_1.ship).to be_an_instance_of(Ship)
     expect(cell_2.ship).to be_an_instance_of(Ship)
     expect(cell_3.ship).to be_an_instance_of(Ship)
+
+    expect(board.place(cruiser, ["A1", "A4", "A3"])).to eq(false)
   end
 
   it 'checks if same ship on different cells' do
