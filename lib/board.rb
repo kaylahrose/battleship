@@ -35,7 +35,7 @@ class Board
 
   def valid_placement?(ship, coordinate_array)
     # require 'pry'; binding.pry
-    if coordinate_array.length == ship.length 
+    if coordinate_array.length == ship.length
         # iterate through coordinates and shovel letter into one array and numbers into number array
 
         letter = []
@@ -45,14 +45,26 @@ class Board
             number << coordinate[1]
         end
         # if the letters in the array are all the same
+        # require 'pry'; binding.pry
+        # letter.sort!
+        # number.sort!
+
         if letter.uniq.size <= 1
             # check if the numbers count in order
-            number[-1].to_i == number[0].to_i + (number.length - 1)
-        # if the numbers in the array are all the same    
+            if number == number.sort
+              number[-1].to_i == number[0].to_i + (number.length - 1)
+            else
+              false
+            end
+        # if the numbers in the array are all the same
         elsif number.uniq.size <= 1
             # check if the letters go in order
             # require 'pry'; binding.pry
-            letter[-1].ord == letter[0].ord + (letter.length - 1)
+            if letter == letter.sort
+              letter[-1].ord == letter[0].ord + (letter.length - 1)
+            else
+              false
+            end
         else
             false
         end
@@ -62,5 +74,12 @@ class Board
 
 
 
+  end
+
+  def place(ship, coordinates)
+    coordinates.each do |coordinate|
+      cells[coordinate].ship = ship
+    end
+    # require 'pry'; binding.pry
   end
 end
