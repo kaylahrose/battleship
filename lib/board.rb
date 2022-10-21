@@ -32,14 +32,21 @@ class Board
     # require 'pry'; binding.pry
   end
 
-  def check_overlap
+  def overlap?(coordinate_array)
     # check if any of the cell
-    if cell.ship == ship
-      true
-    else
-      # call invalid method
-      false
+    coordinate_array.each do |coordinate|
+      if cells[coordinate].ship_present? == true
+        return false
+      end
+      # require 'pry'; binding.pry
     end
+    # require 'pry'; binding.pry
+    # if cell.ship == ship
+    #   true
+    # else
+    #   # call invalid method
+    #   false
+    # end
       # ?check if any of the coordinates/cells have coordinates already
 
   end
@@ -48,38 +55,41 @@ class Board
     # if check_overlap == true
     # access ship == nil
     # call ship inside cell, then
+    if overlap?(coordinate_array) == false
 
-
-    require 'pry'; binding.pry
+    # require 'pry'; binding.pry
     # have a conditional statement
     # check if the coordinate are full before correct length verification
-    if coordinate_array.length == ship.length
-      # iterate through coordinates and shovel letter into one array and numbers into number array
+      if coordinate_array.length == ship.length
+        # iterate through coordinates and shovel letter into one array and numbers into number array
 
-      letter = []
-      number = []
-      coordinate_array.each do |coordinate|
-        letter << coordinate[0]
-        number << coordinate[1]
-      end
-      # if the letters in the array are all the same
-      # require 'pry'; binding.pry
-      # letter.sort!
-      # number.sort!
-
-      if letter.uniq.size <= 1
-        # check if the numbers count in order
-        if number == number.sort
-          number[-1].to_i == number[0].to_i + (number.length - 1)
-        else
-          false
+        letter = []
+        number = []
+        coordinate_array.each do |coordinate|
+          letter << coordinate[0]
+          number << coordinate[1]
         end
-      # if the numbers in the array are all the same
-      elsif number.uniq.size <= 1
-        # check if the letters go in order
+        # if the letters in the array are all the same
         # require 'pry'; binding.pry
-        if letter == letter.sort
-          letter[-1].ord == letter[0].ord + (letter.length - 1)
+        # letter.sort!
+        # number.sort!
+
+        if letter.uniq.size <= 1
+          # check if the numbers count in order
+          if number == number.sort
+            number[-1].to_i == number[0].to_i + (number.length - 1)
+          else
+            false
+          end
+        # if the numbers in the array are all the same
+        elsif number.uniq.size <= 1
+          # check if the letters go in order
+          # require 'pry'; binding.pry
+          if letter == letter.sort
+            letter[-1].ord == letter[0].ord + (letter.length - 1)
+          else
+            false
+          end
         else
           false
         end
