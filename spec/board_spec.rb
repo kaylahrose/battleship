@@ -80,4 +80,28 @@ RSpec.describe Board do
     expect(board.valid_placement?(cruiser, ["A1", "D1", "C1"])).to eq(false)
   end
 
+  # placing_ships interaction pattern
+  it 'places cruiser on board' do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+    cell_1 = board.cells["A1"]
+    cell_2 = board.cells["A2"]
+    cell_3 = board.cells["A3"]
+
+    expect(cell_1.ship).to be_an_instance_of(Ship)
+    expect(cell_2.ship).to be_an_instance_of(Ship)
+    expect(cell_3.ship).to be_an_instance_of(Ship)
+  end
+
+  it 'checks if same ship on different cells' do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+    cell_1 = board.cells["A1"]
+    cell_2 = board.cells["A2"]
+    cell_3 = board.cells["A3"]
+
+    expect(cell_3.ship == cell_2.ship).to eq(true)
+  end
 end
