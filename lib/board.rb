@@ -77,8 +77,13 @@ class Board
   end
 
   def place(ship, coordinates)
-    coordinates.each do |coordinate|
-      cells[coordinate].ship = ship
+    if valid_placement?(ship, coordinates)
+      coordinates.each do |coordinate|
+        cells[coordinate].ship = ship
+      end
+    else
+      false
+      # puts "Invalid placement, please try again"
     end
     # require 'pry'; binding.pry
   end
