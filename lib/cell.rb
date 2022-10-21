@@ -1,6 +1,7 @@
 class Cell
   attr_reader :coordinate, :damage
   attr_accessor :ship
+
   def initialize(coordinate)
     @coordinate = coordinate
     @ship = nil
@@ -8,7 +9,7 @@ class Cell
   end
 
   def empty?
-    @ship == nil
+    @ship.nil?
   end
 
   def place_ship(ship_obj)
@@ -25,7 +26,7 @@ class Cell
       @fired_upon = true
     else
       @fired_upon = true
-    # require 'pry'; binding.pry
+      # require 'pry'; binding.pry
     end
   end
 
@@ -33,13 +34,13 @@ class Cell
     !@ship.nil?
     # require 'pry'; binding.pry
   end
-    # returns a String representation of the Cell for when we need to print the board
-    #  A cell can potentially be rendered as:
+  # returns a String representation of the Cell for when we need to print the board
+  #  A cell can potentially be rendered as:
 
-    # ”.” if the cell has not been fired upon.
-    # “M” if the cell has been fired upon and it does not contain a ship (the shot was a miss).
-    # “H” if the cell has been fired upon and it contains a ship (the shot was a hit).
-    # “X” if the cell has been fired upon and its ship has been sunk.
+  # ”.” if the cell has not been fired upon.
+  # “M” if the cell has been fired upon and it does not contain a ship (the shot was a miss).
+  # “H” if the cell has been fired upon and it contains a ship (the shot was a hit).
+  # “X” if the cell has been fired upon and its ship has been sunk.
   def render(show = false)
     if ship_present?
       if @ship.sunk?

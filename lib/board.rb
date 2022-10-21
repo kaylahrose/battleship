@@ -26,54 +26,69 @@ class Board
 
   def valid_coordinate?(coordinate)
     cells.keys.any? do |key_coordinate|
-
-        # require 'pry'; binding.pry
-        key_coordinate == coordinate
+      # require 'pry'; binding.pry
+      key_coordinate == coordinate
     end
     # require 'pry'; binding.pry
   end
 
-  def valid_placement?(ship, coordinate_array)
-    # require 'pry'; binding.pry
-    if coordinate_array.length == ship.length
-        # iterate through coordinates and shovel letter into one array and numbers into number array
-
-        letter = []
-        number = []
-        coordinate_array.each do |coordinate|
-            letter << coordinate[0]
-            number << coordinate[1]
-        end
-        # if the letters in the array are all the same
-        # require 'pry'; binding.pry
-        # letter.sort!
-        # number.sort!
-
-        if letter.uniq.size <= 1
-            # check if the numbers count in order
-            if number == number.sort
-              number[-1].to_i == number[0].to_i + (number.length - 1)
-            else
-              false
-            end
-        # if the numbers in the array are all the same
-        elsif number.uniq.size <= 1
-            # check if the letters go in order
-            # require 'pry'; binding.pry
-            if letter == letter.sort
-              letter[-1].ord == letter[0].ord + (letter.length - 1)
-            else
-              false
-            end
-        else
-            false
-        end
+  def check_overlap
+    # check if any of the cell
+    if cell.ship == ship
+      true
     else
-        false
+      # call invalid method
+      false
     end
+      # ?check if any of the coordinates/cells have coordinates already
+
+  end
+
+  def valid_placement?(ship, coordinate_array)
+    # if check_overlap == true
+    # access ship == nil
+    # call ship inside cell, then
 
 
+    require 'pry'; binding.pry
+    # have a conditional statement
+    # check if the coordinate are full before correct length verification
+    if coordinate_array.length == ship.length
+      # iterate through coordinates and shovel letter into one array and numbers into number array
 
+      letter = []
+      number = []
+      coordinate_array.each do |coordinate|
+        letter << coordinate[0]
+        number << coordinate[1]
+      end
+      # if the letters in the array are all the same
+      # require 'pry'; binding.pry
+      # letter.sort!
+      # number.sort!
+
+      if letter.uniq.size <= 1
+        # check if the numbers count in order
+        if number == number.sort
+          number[-1].to_i == number[0].to_i + (number.length - 1)
+        else
+          false
+        end
+      # if the numbers in the array are all the same
+      elsif number.uniq.size <= 1
+        # check if the letters go in order
+        # require 'pry'; binding.pry
+        if letter == letter.sort
+          letter[-1].ord == letter[0].ord + (letter.length - 1)
+        else
+          false
+        end
+      else
+        false
+      end
+    else
+      false
+    end
   end
 
   def place(ship, coordinates)

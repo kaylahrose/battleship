@@ -3,8 +3,8 @@ require './lib/ship'
 RSpec.describe Ship do
   # iteration 1
   before(:each) do
-    @cruiser = Ship.new("Cruiser", 3)
-    @submarine = Ship.new("Submarine", 2)
+    @cruiser = Ship.new('Cruiser', 3)
+    @submarine = Ship.new('Submarine', 2)
   end
   describe '#initialize' do
     it 'exists' do
@@ -12,7 +12,7 @@ RSpec.describe Ship do
     end
 
     it 'has a name' do
-      expect(@cruiser.name).to eq("Cruiser")
+      expect(@cruiser.name).to eq('Cruiser')
     end
 
     it 'has a length' do
