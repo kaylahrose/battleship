@@ -101,9 +101,12 @@ class Board
 
   def board_render(show = false)
     return ("  1 2 3 4 \n" +
-        "A . . . . \n" +
+        "A #{cells.each do |coordinate, cell|
+        print cell.cell_render  if coordinate[0] == "A"
+        end}   \n" +
         "B . . . . \n" +
         "C . . . . \n" +
         "D . . . . \n")
   end
+  # #{cells["A1"].cell_render}
 end
