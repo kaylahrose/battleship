@@ -33,7 +33,8 @@ class Board
     if overlap?(coordinate_array) == false
       valid_placement_array_length?(ship, coordinate_array)
     else
-      false
+      puts "Invalid"
+      false 
     end
   end
 
@@ -41,8 +42,8 @@ class Board
     coordinate_array.any? do |coordinate|
       cells[coordinate].ship_present?
     end
+    # require 'pry'; binding.pry
   end
-
 
   def valid_placement_array_length?(ship, coordinate_array)
     if coordinate_array.length == ship.length
@@ -101,7 +102,7 @@ class Board
 
   def board_render(show = false)
     # require 'pry'; binding.pry
-    return ("  1 2 3 4 \n" +
+    ("  1 2 3 4 \n" +
         "A #{row_a(show)} \n" +
         "B #{row_b(show)} \n" +
         "C #{row_c(show)} \n" +
@@ -110,31 +111,48 @@ class Board
 
   def row_a(show)
     a = cells.map do |coordinate, cell|
-      cell.cell_render(show)  if coordinate[0] == "A"
+      cell.cell_render(show)  if coordinate[0] == 'A'
     end
-    a.compact.join(" ")
+    a.compact.join(' ')
   end
 
   def row_b(show)
     b = cells.map do |coordinate, cell|
-      cell.cell_render(show)  if coordinate[0] == "B"
+      cell.cell_render(show)  if coordinate[0] == 'B'
     end
-    b.compact.join(" ")
+    b.compact.join(' ')
   end
 
   def row_c(show)
     c = cells.map do |coordinate, cell|
-      cell.cell_render(show)  if coordinate[0] == "C"
+      cell.cell_render(show)  if coordinate[0] == 'C'
     end
-    c.compact.join(" ")
+    c.compact.join(' ')
   end
 
   def row_d(show)
     d = cells.map do |coordinate, cell|
-      cell.cell_render(show)  if coordinate[0] == "D"
+      cell.cell_render(show)  if coordinate[0] == 'D'
     end
-    d.compact.join(" ")
+    d.compact.join(' ')
   end
 
-  
+  def random_place(ship)
+    possible_arrays = []
+    ('A'..'D').to_a.each do |letter|
+      ("#{letter}1".."#{letter}4").each_cons(ship.length) do |a|
+        possible_arrays << a
+      end
+    end
+    (1..4).to_a.each do |number|
+      ("#{number}A".."#{number}D").each_cons(ship.length) do |a|
+        possible_arrays << a.map do |b|
+          b.reverse
+        end
+      end
+    end
+    # require 'pry'; binding.pry
+    until place(ship, possible_arrays.sample)
+    end
+  end
 end
