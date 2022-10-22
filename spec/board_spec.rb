@@ -3,7 +3,7 @@ require './lib/cell'
 require './lib/board'
 
 RSpec.describe Board do
-  xit 'exists' do
+  it 'exists' do
     # require 'pry'; binding.pry
     board = Board.new
     # require 'pry'; binding.pry
@@ -39,7 +39,7 @@ RSpec.describe Board do
     # require 'pry'; binding.pry
   end
 
-  xit 'validates placement by array length' do
+  it 'validates placement by array length' do
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
     submarine = Ship.new('Submarine', 2)
@@ -49,7 +49,7 @@ RSpec.describe Board do
     expect(board.valid_placement?(submarine, %w[A2 A3 A4])).to eq(false)
   end
 
-  xit 'validates placement with consecutive coordinates' do
+  it 'validates placement with consecutive coordinates' do
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
     submarine = Ship.new('Submarine', 2)
@@ -62,7 +62,7 @@ RSpec.describe Board do
     expect(board.valid_placement?(submarine, %w[C1 B1])).to eq(false)
   end
 
-  xit 'validates placement no diagonal coordinates' do
+  it 'validates placement no diagonal coordinates' do
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
     submarine = Ship.new('Submarine', 2)
@@ -71,7 +71,7 @@ RSpec.describe Board do
     expect(board.valid_placement?(submarine, %w[C2 D3])).to eq(false)
   end
 
-  xit 'validates placement example true' do
+  it 'validates placement example true' do
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
     submarine = Ship.new('Submarine', 2)
@@ -83,7 +83,7 @@ RSpec.describe Board do
   end
 
   # placing_ships interaction pattern
-  xit 'places cruiser on board' do
+  it 'places cruiser on board' do
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
     board.place(cruiser, %w[A1 A2 A3])
@@ -91,7 +91,7 @@ RSpec.describe Board do
     cell_1 = board.cells['A1']
     cell_2 = board.cells['A2']
     cell_3 = board.cells['A3']
-    
+
     expect(cell_1.ship).to be_an_instance_of(Ship)
     expect(cell_2.ship).to be_an_instance_of(Ship)
     expect(cell_3.ship).to be_an_instance_of(Ship)
@@ -99,7 +99,7 @@ RSpec.describe Board do
     expect(board.place(cruiser, %w[A1 A4 A3])).to eq(false)
   end
 
-  xit 'checks if same ship on different cells' do
+  it 'checks if same ship on different cells' do
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
     board.place(cruiser, %w[A1 A2 A3])
@@ -117,5 +117,21 @@ RSpec.describe Board do
     submarine = Ship.new("Submarine", 2)
     # require 'pry'; binding.pry
     expect(board.valid_placement?(submarine, ["A1", "B1"])).to eq(false)
+  end
+
+  it 'can render board' do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+    expect(board.render).to eq("  1 2 3 4 \n" +
+                              "A . . . . \n" +
+                              "B . . . . \n" +
+                              "C . . . . \n" +
+                              "D . . . . \n")
+    expect(board.render(true)).to eq("  1 2 3 4 \n" +
+                                    "A S S S . \n" +
+                                    "B . . . . \n" +
+                                    "C . . . . \n" +
+                                    "D . . . . \n")
   end
 end
