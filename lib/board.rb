@@ -98,4 +98,12 @@ class Board
       # puts "Invalid placement, please try again"
     end
   end
+
+  def board_render(show = false)
+    return ("  1 2 3 4 \n" +
+        "A . . . . \n" +
+        "B . . . . \n" +
+        "C . . . . \n" +
+        "D . . . . \n")
+  end
 end
