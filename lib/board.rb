@@ -43,6 +43,7 @@ class Board
     end
   end
 
+
   def valid_placement_array_length?(ship, coordinate_array)
     if coordinate_array.length == ship.length
       consecutive_coordinates?(coordinate_array)
