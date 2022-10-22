@@ -60,39 +60,39 @@ RSpec.describe Cell do
       expect(@cell.ship.health).to eq(2)
     end
 
-    it 'renders new cell' do
-      expect(@cell_1.render).to eq('.')
+    it 'cell_renders new cell' do
+      expect(@cell_1.cell_render).to eq('.')
     end
 
-    it 'renders empty fired at cell' do
+    it 'cell_renders empty fired at cell' do
       cell_1 = Cell.new('B4')
       cell_1.fire_upon
-      expect(cell_1.render).to eq('M')
+      expect(cell_1.cell_render).to eq('M')
     end
 
-    it 'renders new cell with ship' do
+    it 'cell_renders new cell with ship' do
       cell_2 = Cell.new('C3')
       cruiser = Ship.new('Cruiser', 3)
       cell_2.place_ship(cruiser)
-      expect(cell_2.render).to eq('.')
+      expect(cell_2.cell_render).to eq('.')
     end
 
-    it 'renders cell with undamaged ship' do
+    it 'cell_renders cell with undamaged ship' do
       cell_2 = Cell.new('C3')
       cruiser = Ship.new('Cruiser', 3)
       cell_2.place_ship(cruiser)
-      expect(cell_2.render(true)).to eq('S')
+      expect(cell_2.cell_render(true)).to eq('S')
     end
 
-    it 'renders fired upon cell with damaged ship' do
+    it 'cell_renders fired upon cell with damaged ship' do
       cell_2 = Cell.new('C3')
       cruiser = Ship.new('Cruiser', 3)
       cell_2.place_ship(cruiser)
       cell_2.fire_upon
-      expect(cell_2.render).to eq('H')
+      expect(cell_2.cell_render).to eq('H')
     end
 
-    it 'renders cell with sunk ship' do
+    it 'cell_renders cell with sunk ship' do
       cell_2 = Cell.new('C3')
       cruiser = Ship.new('Cruiser', 3)
       cell_2.place_ship(cruiser)
@@ -103,7 +103,7 @@ RSpec.describe Cell do
       cruiser.hit
       expect(cruiser.sunk?).to eq(true)
 
-      expect(cell_2.render).to eq('X')
+      expect(cell_2.cell_render).to eq('X')
     end
   end
 end

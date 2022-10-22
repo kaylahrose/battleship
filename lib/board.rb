@@ -98,4 +98,15 @@ class Board
       # puts "Invalid placement, please try again"
     end
   end
+
+  def board_render(show = false)
+    return ("  1 2 3 4 \n" +
+        "A #{cells.map do |coordinate, cell|
+        cell.cell_render  if coordinate[0] == "A"
+        end}   \n" +
+        "B . . . . \n" +
+        "C . . . . \n" +
+        "D . . . . \n")
+  end
+  # #{cells["A1"].cell_render}
 end
