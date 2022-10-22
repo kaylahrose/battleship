@@ -1,4 +1,4 @@
 require './lib/gameplay'
 
 
-Gameplay.new.start
+Gameplay.new.main_menu
