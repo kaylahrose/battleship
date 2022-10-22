@@ -135,4 +135,6 @@ class Board
     end
     d.compact.join(" ")
   end
+
+  
 end
