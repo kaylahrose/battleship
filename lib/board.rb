@@ -100,13 +100,39 @@ class Board
   end
 
   def board_render(show = false)
+    # require 'pry'; binding.pry
     return ("  1 2 3 4 \n" +
-        "A #{cells.map do |coordinate, cell|
-        cell.cell_render  if coordinate[0] == "A"
-        end}   \n" +
-        "B . . . . \n" +
-        "C . . . . \n" +
-        "D . . . . \n")
+        "A #{row_a(show)} \n" +
+        "B #{row_b(show)} \n" +
+        "C #{row_c(show)} \n" +
+        "D #{row_d(show)} \n")
   end
-  # #{cells["A1"].cell_render}
+
+  def row_a(show)
+    a = cells.map do |coordinate, cell|
+      cell.cell_render(show)  if coordinate[0] == "A"
+    end
+    a.compact.join(" ")
+  end
+
+  def row_b(show)
+    b = cells.map do |coordinate, cell|
+      cell.cell_render(show)  if coordinate[0] == "B"
+    end
+    b.compact.join(" ")
+  end
+
+  def row_c(show)
+    c = cells.map do |coordinate, cell|
+      cell.cell_render(show)  if coordinate[0] == "C"
+    end
+    c.compact.join(" ")
+  end
+
+  def row_d(show)
+    d = cells.map do |coordinate, cell|
+      cell.cell_render(show)  if coordinate[0] == "D"
+    end
+    d.compact.join(" ")
+  end
 end

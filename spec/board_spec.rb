@@ -130,10 +130,11 @@ RSpec.describe Board do
                               "D . . . . \n")
   end
 
-  xit 'can render board(true)' do
+  it 'can render board(true)' do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
+    # require 'pry'; binding.pry
     expect(board.board_render(true)).to eq("  1 2 3 4 \n" +
                                     "A S S S . \n" +
                                     "B . . . . \n" +
