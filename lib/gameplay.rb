@@ -40,8 +40,22 @@ class Gameplay
     submarine = Ship.new('Submarine', 2)
     comp_board.place(cruiser, %w[C2 D2])
     comp_board.board_render
-    require 'pry'; binding.pry
+# require 'pry'; binding.pry
   
+  end
+
+  def player_setup
+    player_board = Board.new
+    cruiser = Ship.new('Cruiser', 3)
+    
+    submarine = Ship.new('Submarine', 2)
+  instructions = "I have laid out my ships on the grid.\n" +
+    "You now need to lay out your two ships.\n" +
+    "The Cruiser is three units long and the Submarine is two units long."
+    puts instructions
+    puts player_board.board_render
+   
+# require 'pry'; binding.pry
   end
 
 
