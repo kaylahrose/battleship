@@ -11,7 +11,9 @@ RSpec.describe Board do
     expect(board).to be_an_instance_of(Board)
   end
 
-  xit 'has an hash of cells' do
+
+  it 'has a hash of cells' do
+
     board = Board.new
 
     # It’s a hash, it should have 16 key/value pairs, and those keys point to cell objects.
@@ -20,7 +22,9 @@ RSpec.describe Board do
     board.cells.values.each { |cell| expect(cell).to be_an_instance_of(Cell) }
   end
 
-  xit 'validates coordinates' do
+
+  it 'validates coordinates in 4x4 grid' do
+
     board = Board.new
 
     expect(board.valid_coordinate?('A1')).to eq(true)
@@ -83,10 +87,11 @@ RSpec.describe Board do
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
     board.place(cruiser, %w[A1 A2 A3])
+    # require 'pry'; binding.pry
     cell_1 = board.cells['A1']
     cell_2 = board.cells['A2']
     cell_3 = board.cells['A3']
-
+    
     expect(cell_1.ship).to be_an_instance_of(Ship)
     expect(cell_2.ship).to be_an_instance_of(Ship)
     expect(cell_3.ship).to be_an_instance_of(Ship)
