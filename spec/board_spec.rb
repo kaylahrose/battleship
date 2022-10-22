@@ -130,7 +130,7 @@ RSpec.describe Board do
                               "D . . . . \n")
   end
 
-  it 'can render board(true)' do
+  xit 'can render board(true)' do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
