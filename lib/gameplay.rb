@@ -3,10 +3,12 @@ require './lib/ship'
 require './lib/cell'
 class Gameplay
     attr_reader :menu
-    attr_accessor :input
+    attr_accessor :input, :comp_board, :player_board
     def initialize
         @menu = "Welcome to BATTLESHIP\n" + 'Enter p to play. Enter q to quit.'
         @input = nil
+        @comp_board = Board.new
+        @player_board = Board.new
     end
 
   def main_menu
@@ -34,7 +36,7 @@ class Gameplay
 
   def computer_setup
     # require 'pry'; binding.pry
-    comp_board = Board.new
+    # comp_board = Board.new
     cruiser = Ship.new('Cruiser', 3)
     comp_board.place(cruiser, %w[A1 A2 A3])
     submarine = Ship.new('Submarine', 2)
@@ -45,7 +47,7 @@ class Gameplay
   end
 
   def player_setup
-    player_board = Board.new
+# player_board = Board.new
     cruiser = Ship.new('Cruiser', 3)
     
     submarine = Ship.new('Submarine', 2)
@@ -63,12 +65,21 @@ class Gameplay
     test = gets.strip.split
     player_board.place(submarine, test)
     puts player_board.board_render(true)
+    turn
 
 
 
 
    
 # require 'pry'; binding.pry
+  end
+
+  def turn
+    puts "=============COMPUTER BOARD============="
+    puts comp_board.board_render
+    puts "==============PLAYER BOARD=============="
+    puts player_board.board_render
+
   end
 
 
