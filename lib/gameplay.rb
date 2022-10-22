@@ -54,6 +54,19 @@ class Gameplay
     "The Cruiser is three units long and the Submarine is two units long."
     puts instructions
     puts player_board.board_render
+    puts "Enter the squares for the Cruiser (3 spaces):"
+    test = gets.strip.split
+    # require 'pry'; binding.pry
+    player_board.place(cruiser, test)
+    puts player_board.board_render(true)
+    puts "Enter the squares for the Submarine (2 spaces):"
+    test = gets.strip.split
+    player_board.place(submarine, test)
+    puts player_board.board_render(true)
+
+
+
+
    
 # require 'pry'; binding.pry
   end
