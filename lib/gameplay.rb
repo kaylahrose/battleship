@@ -43,16 +43,12 @@ class Gameplay
     puts player_board.board_render
     puts 'Enter the squares for the Cruiser (3 spaces):'
     test = gets.strip.upcase.split
-    # require 'pry'; binding.pry
+
     until test.all? { |coordinate| player_board.valid_coordinate?(coordinate) }
       puts 'invalid, please try again'
       test = gets.strip.upcase.split
-      # require 'pry'; binding.pry
     end
-    # until player_board.valid_coordinate?(test)
-    #     puts "invalid, please try again"
-    #     test = gets.strip.upcase.split
-    # end
+
     until player_board.place(player_cruiser, test)
       puts 'invalid, please try again'
       test = gets.strip.upcase.split
@@ -61,14 +57,17 @@ class Gameplay
     puts player_board.board_render(true)
     puts 'Enter the squares for the Submarine (2 spaces):'
     test = gets.strip.upcase.split
+
     until test.all? { |coordinate| player_board.valid_coordinate?(coordinate) }
       puts 'invalid, please try again'
       test = gets.strip.upcase.split
     end
+
     until player_board.place(player_submarine, test)
       puts 'invalid, please try again'
       test = gets.strip.upcase.split
     end
+
     puts player_board.board_render(true)
     turn
   end
@@ -80,15 +79,12 @@ class Gameplay
     puts player_board.board_render(true)
     puts 'Enter the coordinate for your shot:'
     shot = gets.strip.upcase
-    # main_menu if turn == "q"
-    # sleep(1)
+
     while comp_board.cells[shot].fired_upon?
       puts 'This cell has been fired upon, please try again'
-      # test = gets.strip.upcase.split
       shot = gets.strip.upcase
     end
     comp_board.cells[shot].fire_upon
-    # require 'pry'; binding.pry
     comp_shot = player_board.cells.keys.sample
     comp_shot = player_board.cells.keys.sample while player_board.cells[comp_shot].fired_upon?
     player_board.cells[comp_shot].fire_upon
@@ -100,10 +96,6 @@ class Gameplay
     puts "Your shot on #{shot} was a #{hit_or_miss_comp(shot)}."
     puts "My shot on #{comp_shot} was a #{hit_or_miss_player(comp_shot)}."
 
-    # occupied_cells = comp_board.cells.select do |coordinate, cell|
-    #   require 'pry'
-    #   binding.pry
-    # end
     if comp_submarine.sunk? && comp_cruiser.sunk?
       puts "You won!"
       abort
@@ -116,7 +108,6 @@ class Gameplay
   end
 
   def hit_or_miss_comp(shot)
-    # require 'pry'; binding.pry
     if comp_board.cells[shot].fired_upon? && comp_board.cells[shot].ship_present?
       'hit'
     else
@@ -132,7 +123,4 @@ class Gameplay
     end
   end
   
-  def endgame
-  end
-
 end

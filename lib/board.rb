@@ -39,10 +39,8 @@ class Board
 
   def overlap?(coordinate_array)
     coordinate_array.any? do |coordinate|
-
       cells[coordinate].ship_present?
     end
-
   end
 
   def valid_placement_array_length?(ship, coordinate_array)
@@ -96,12 +94,10 @@ class Board
       end
     else
       false
-      # puts "Invalid placement, please try again"
     end
   end
 
   def board_render(show = false)
-    # require 'pry'; binding.pry
     ("  1 2 3 4 \n" +
         "A #{row_a(show)} \n" +
         "B #{row_b(show)} \n" +
@@ -151,7 +147,6 @@ class Board
         end
       end
     end
-    # require 'pry'; binding.pry
     until place(ship, possible_arrays.sample)
     end
   end

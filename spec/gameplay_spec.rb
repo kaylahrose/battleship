@@ -6,7 +6,7 @@ require './lib/gameplay'
 RSpec.describe Gameplay do
   it 'prints main menu' do
     gameplay = Gameplay.new
-    # require 'pry'; binding.pry
+   
     expect(gameplay.menu).to eq("Welcome to BATTLESHIP\nEnter p to play. Enter q to quit.")
   end
 
@@ -15,8 +15,7 @@ RSpec.describe Gameplay do
     gameplay.input = "p"
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
-        # require 'pry'; binding.pry
-        # make it equal to 'p' in test setup
+       
 
     expect(board).to be_an_instance_of(Board)
     expect(cruiser).to be_an_instance_of(Ship)
