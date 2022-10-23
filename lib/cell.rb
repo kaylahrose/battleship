@@ -42,6 +42,17 @@ class Cell
   # “H” if the cell has been fired upon and it contains a ship (the shot was a hit).
   # “X” if the cell has been fired upon and its ship has been sunk.
   def cell_render(show = false)
+    # if ship == empty?
+    #   cell_render_no_ship(show)
+    # else
+    #   cell_render_with_ship(show)
+    # end
+
+
+
+
+
+    
     if ship_present?
       if @ship.sunk?
         'X'
@@ -58,6 +69,28 @@ class Cell
       'M'
     end
   end
+  
+  # def cell_render_no_ship
+  #   if fired_upon == true
+  #     "M"
+  #   else
+  #     "."
+  #   end
+  # end
+
+  # def cell_render_with_ship(show)
+  #   if ship.sunk?
+  #     "X"
+  #   elsif fired_upon == true
+  #     "H"
+  #   elsif show
+  #     "S"
+  #   else
+  #     "."
+  #   end
+  #   # "S"
+  #   #"."
+  # end
 
   def ship_was_hit(show)
     show && @fired_upon || @fired_upon

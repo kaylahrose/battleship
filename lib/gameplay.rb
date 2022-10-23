@@ -43,11 +43,31 @@ class Gameplay
     puts player_board.board_render
     puts 'Enter the squares for the Cruiser (3 spaces):'
     test = gets.strip.split
-    player_board.place(cruiser, test)
+    # require 'pry'; binding.pry
+    until test.all? { |coordinate| player_board.valid_coordinate?(coordinate)}
+        puts "invalid, please try again"
+        test = gets.strip.split
+    end
+    # until player_board.valid_coordinate?(test)
+    #     puts "invalid, please try again"
+    #     test = gets.strip.split
+    # end
+    until player_board.place(cruiser, test)
+        puts "invalid, please try again"
+        test = gets.strip.split
+    end
+
     puts player_board.board_render(true)
     puts 'Enter the squares for the Submarine (2 spaces):'
     test = gets.strip.split
-    player_board.place(submarine, test)
+    until test.all? { |coordinate| player_board.valid_coordinate?(coordinate)}
+        puts "invalid, please try again"
+        test = gets.strip.split
+    end
+    until player_board.place(submarine, test)
+        puts "invalid, please try again"
+        test = gets.strip.split
+    end
     puts player_board.board_render(true)
     turn
   end
@@ -56,9 +76,43 @@ class Gameplay
     puts '=============COMPUTER BOARD============='
     puts comp_board.board_render
     puts '==============PLAYER BOARD=============='
-    puts player_board.board_render
+    puts player_board.board_render(true)
     puts 'Enter the coordinate for your shot:'
     turn = gets.strip
+    main_menu if turn == "q"
+    sleep(1)
     comp_board.cells[turn].fire_upon
+    # require 'pry'; binding.pry
+    results
   end
+
+  def results
+    puts "Your shot on A4 was a miss.
+    My shot on C1 was a miss."
+    turn
+  end
+end
+
+
+# def render(show = false)
+#     if cell.empty?
+#         if cell.fired_upon
+#             "M"
+#         end
+#         "."
+#     else
+#         if cell.fired_upon
+#             if ship.health == 0
+#                 "X"
+#             end
+#             "H"
+#         end
+#     end
+
+    def valid?
+        until test.all? { |coordinate| player_board.valid_coordinate?(coordinate)}
+            puts "invalid, please try again"
+            test = gets.strip.split
+        end
+    end
 end
