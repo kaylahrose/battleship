@@ -82,9 +82,17 @@ class Gameplay
     shot = gets.strip.upcase
     # main_menu if turn == "q"
     # sleep(1)
+    while comp_board.cells[shot].fired_upon?
+      puts "This cell has been fired upon, please try again"
+        # test = gets.strip.upcase.split
+      shot = gets.strip.upcase
+    end
     comp_board.cells[shot].fire_upon
     # require 'pry'; binding.pry
     comp_shot = player_board.cells.keys.sample
+    while player_board.cells[comp_shot].fired_upon?
+      comp_shot = player_board.cells.keys.sample
+    end
     player_board.cells[comp_shot].fire_upon
     
     results(shot, comp_shot)
@@ -117,25 +125,3 @@ class Gameplay
 end
 
 
-# def render(show = false)
-#     if cell.empty?
-#         if cell.fired_upon
-#             "M"
-#         end
-#         "."
-#     else
-#         if cell.fired_upon
-#             if ship.health == 0
-#                 "X"
-#             end
-#             "H"
-#         end
-#     end
-
-#     def valid?
-#         until test.all? { |coordinate| player_board.valid_coordinate?(coordinate)}
-#             puts "invalid, please try again"
-#             test = gets.strip.upcase.split
-#         end
-#     end
-# end
