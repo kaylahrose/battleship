@@ -2,12 +2,10 @@ require './lib/board'
 require './lib/ship'
 require './lib/cell'
 class Gameplay
-  attr_reader :menu
   attr_accessor :input, :comp_board, :player_board, :comp_cruiser, :comp_submarine,
                 :player_cruiser, :player_submarine
 
   def initialize
-    @menu = "Welcome to BATTLESHIP\n" + 'Enter p to play. Enter q to quit.'
     @input = nil
     @comp_board = Board.new
     @player_board = Board.new
@@ -18,7 +16,8 @@ class Gameplay
   end
 
   def main_menu
-    puts @menu
+    puts "Welcome to BATTLESHIP\n" + 
+          'Enter p to play. Enter q to quit.'
     @input = gets.strip
     setup if input == 'p'
   end
@@ -30,16 +29,14 @@ class Gameplay
 
   def computer_setup
     comp_board.random_place(@comp_cruiser)
-
     comp_board.random_place(@comp_submarine)
     puts comp_board.board_render(true)
   end
 
   def player_setup
-    instructions = "I have laid out my ships on the grid.\n" +
-                   "You now need to lay out your two ships.\n" +
-                   'The Cruiser is three units long and the Submarine is two units long.'
-    puts instructions
+    puts "I have laid out my ships on the grid.\n" +
+          "You now need to lay out your two ships.\n" +
+          'The Cruiser is three units long and the Submarine is two units long.'
     puts player_board.board_render
     puts 'Enter the squares for the Cruiser (3 spaces):'
     test = gets.strip.upcase.split
@@ -72,6 +69,9 @@ class Gameplay
     turn
   end
 
+  def sanitize
+  end
+
   def turn
     puts '=============COMPUTER BOARD============='
     puts comp_board.board_render
@@ -93,8 +93,8 @@ class Gameplay
   end
 
   def results(shot, comp_shot)
-    puts "Your shot on #{shot} was a #{hit_or_miss_comp(shot)}."
-    puts "My shot on #{comp_shot} was a #{hit_or_miss_player(comp_shot)}."
+    puts "Your shot on #{shot} #{hit_or_miss_comp(shot)}."
+    puts "My shot on #{comp_shot} #{hit_or_miss_player(comp_shot)}."
 
     if comp_submarine.sunk? && comp_cruiser.sunk?
       puts "You won!"
@@ -108,19 +108,23 @@ class Gameplay
   end
 
   def hit_or_miss_comp(shot)
-    if comp_board.cells[shot].fired_upon? && comp_board.cells[shot].ship_present?
-      'hit'
+    # require 'pry'; binding.pry
+    if comp_board.cells[shot].ship_present? && comp_board.cells[shot].ship.sunk?
+      'sunk my ship!'
+    elsif comp_board.cells[shot].ship_present?
+      'was a hit'
     else
-      'miss'
+      'was a miss'
     end
   end
 
   def hit_or_miss_player(comp_shot)
-    if player_board.cells[comp_shot].fired_upon? && player_board.cells[comp_shot].ship_present?
-      'hit'
+    if player_board.cells[comp_shot].ship_present? && player_board.cells[comp_shot].ship.sunk?
+      'sunk your ship!'
+    elsif player_board.cells[comp_shot].ship_present?
+      'was a hit'
     else
-      'miss'
+      'was a miss'
     end
   end
-  
 end
