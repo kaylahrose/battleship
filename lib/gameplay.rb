@@ -47,6 +47,7 @@ class Gameplay
     until test.all? { |coordinate| player_board.valid_coordinate?(coordinate)}
         puts "invalid, please try again"
         test = gets.strip.split
+        # require 'pry'; binding.pry
     end
     # until player_board.valid_coordinate?(test)
     #     puts "invalid, please try again"
@@ -109,10 +110,10 @@ end
 #         end
 #     end
 
-    def valid?
-        until test.all? { |coordinate| player_board.valid_coordinate?(coordinate)}
-            puts "invalid, please try again"
-            test = gets.strip.split
-        end
-    end
-end
+#     def valid?
+#         until test.all? { |coordinate| player_board.valid_coordinate?(coordinate)}
+#             puts "invalid, please try again"
+#             test = gets.strip.split
+#         end
+#     end
+# end
