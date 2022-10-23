@@ -39,47 +39,55 @@ class Gameplay
   end
 
   def player_setup
-    # puts "I have laid out my ships on the grid.\n" +
-    #       "You now need to lay out your two ships.\n" +
-    #       'The Cruiser is three units long and the Submarine is two units long.'
     intstructions
-    # puts player_board.board_render
-    # puts 'Enter the squares for the Cruiser (3 spaces):'
     @input = gets.strip.upcase.split
-    # require 'pry'; binding.pry
-    validate(@input)
+    validate_cruiser(@input)
+
+    # until player_board.place(player_cruiser, @input)
+    #   puts 'invalid, please try again'
+    #   @input = gets.strip.upcase.split
+    # end
+
+    puts player_board.board_render(true)
+    puts 'Enter the squares for the Submarine (2 spaces):'
+    @input = gets.strip.upcase.split
+    validate_sub(@input)
 
     # until test.all? { |coordinate| player_board.valid_coordinate?(coordinate) }
     #   puts 'invalid, please try again'
     #   test = gets.strip.upcase.split
     # end
 
-    until player_board.place(player_cruiser, @input)
-      puts 'invalid, please try again'
-      @input = gets.strip.upcase.split
-    end
-
-    puts player_board.board_render(true)
-    puts 'Enter the squares for the Submarine (2 spaces):'
-    test = gets.strip.upcase.split
-
-    until test.all? { |coordinate| player_board.valid_coordinate?(coordinate) }
-      puts 'invalid, please try again'
-      test = gets.strip.upcase.split
-    end
-
-    until player_board.place(player_submarine, test)
-      puts 'invalid, please try again'
-      test = gets.strip.upcase.split
-    end
+    # until player_board.place(player_submarine, test)
+    #   puts 'invalid, please try again'
+    #   test = gets.strip.upcase.split
+    # end
 
     puts player_board.board_render(true)
     turn
   end
 
-  def validate(input)
+  def validate_cruiser(input)
     # require 'pry'; binding.pry
     until @input.all? { |coordinate| player_board.valid_coordinate?(coordinate) }
+      puts 'invalid, please try again'
+      @input = gets.strip.upcase.split
+    end
+
+    until player_board.place(player_cruiser, @input)
+      puts 'invalid, please try again'
+      @input = gets.strip.upcase.split
+    end
+  end
+
+  def validate_sub(input)
+    # require 'pry'; binding.pry
+    until @input.all? { |coordinate| player_board.valid_coordinate?(coordinate) }
+      puts 'invalid, please try again'
+      @input = gets.strip.upcase.split
+    end
+
+    until player_board.place(player_submarine, @input)
       puts 'invalid, please try again'
       @input = gets.strip.upcase.split
     end
