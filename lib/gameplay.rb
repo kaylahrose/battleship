@@ -19,7 +19,12 @@ class Gameplay
     puts "Welcome to BATTLESHIP\n" + 
           'Enter p to play. Enter q to quit.'
     @input = gets.strip
-    setup if input == 'p'
+    if input == 'p'
+      setup
+    else
+      abort
+    end
+    
   end
 
   def setup
@@ -98,10 +103,10 @@ class Gameplay
 
     if comp_submarine.sunk? && comp_cruiser.sunk?
       puts "You won!"
-      abort
+      main_menu
     elsif player_cruiser.sunk? && player_submarine.sunk?
       puts "I won!"
-      abort
+      main_menu
     end
 
     turn
