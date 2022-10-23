@@ -74,11 +74,6 @@ class Gameplay
     end
   end
 
- 
-
-  def sanitize
-  end
-
   def turn
     puts '=============COMPUTER BOARD============='
     puts comp_board.board_render
@@ -86,17 +81,27 @@ class Gameplay
     puts player_board.board_render(true)
     puts 'Enter the coordinate for your shot:'
     shot = gets.strip.upcase
+    validate_shot(shot)
 
-    while comp_board.cells[shot].fired_upon?
-      puts 'This cell has been fired upon, please try again'
-      shot = gets.strip.upcase
-    end
-    comp_board.cells[shot].fire_upon
+    # while comp_board.cells[shot].fired_upon?
+    #   puts 'This cell has been fired upon, please try again'
+    #   shot = gets.strip.upcase
+    # end
+    # comp_board.cells[shot].fire_upon
     comp_shot = player_board.cells.keys.sample
     comp_shot = player_board.cells.keys.sample while player_board.cells[comp_shot].fired_upon?
     player_board.cells[comp_shot].fire_upon
 
     results(shot, comp_shot)
+  end
+
+  def validate_shot(shot)
+    while comp_board.cells[shot].fired_upon?
+      puts 'This cell has been fired upon, please try again'
+      shot = gets.strip.upcase
+    end
+    comp_board.cells[shot].fire_upon
+
   end
 
   def results(shot, comp_shot)
