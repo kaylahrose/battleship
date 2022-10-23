@@ -97,7 +97,8 @@ class Gameplay
   end
 
   def hit_or_miss_comp(shot)
-    if comp_board.cells[shot].fired_upon?
+    # require 'pry'; binding.pry
+    if comp_board.cells[shot].fired_upon? && comp_board.cells[shot].ship_present?
       "hit"
     else
       "miss"
@@ -105,7 +106,7 @@ class Gameplay
   end
 
   def hit_or_miss_player(comp_shot)
-    if player_board.cells[comp_shot].fired_upon?
+    if player_board.cells[comp_shot].fired_upon? && player_board.cells[comp_shot].ship_present?
       "hit"
     else
       "miss"
