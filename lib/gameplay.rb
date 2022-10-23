@@ -42,32 +42,32 @@ class Gameplay
     puts instructions
     puts player_board.board_render
     puts 'Enter the squares for the Cruiser (3 spaces):'
-    test = gets.strip.split
+    test = gets.strip.upcase.split
     # require 'pry'; binding.pry
     until test.all? { |coordinate| player_board.valid_coordinate?(coordinate)}
         puts "invalid, please try again"
-        test = gets.strip.split
+        test = gets.strip.upcase.split
         # require 'pry'; binding.pry
     end
     # until player_board.valid_coordinate?(test)
     #     puts "invalid, please try again"
-    #     test = gets.strip.split
+    #     test = gets.strip.upcase.split
     # end
     until player_board.place(cruiser, test)
         puts "invalid, please try again"
-        test = gets.strip.split
+        test = gets.strip.upcase.split
     end
 
     puts player_board.board_render(true)
     puts 'Enter the squares for the Submarine (2 spaces):'
-    test = gets.strip.split
+    test = gets.strip.upcase.split
     until test.all? { |coordinate| player_board.valid_coordinate?(coordinate)}
         puts "invalid, please try again"
-        test = gets.strip.split
+        test = gets.strip.upcase.split
     end
     until player_board.place(submarine, test)
         puts "invalid, please try again"
-        test = gets.strip.split
+        test = gets.strip.upcase.split
     end
     puts player_board.board_render(true)
     turn
@@ -79,19 +79,40 @@ class Gameplay
     puts '==============PLAYER BOARD=============='
     puts player_board.board_render(true)
     puts 'Enter the coordinate for your shot:'
-    turn = gets.strip
-    main_menu if turn == "q"
-    sleep(1)
-    comp_board.cells[turn].fire_upon
+    shot = gets.strip.upcase
+    # main_menu if turn == "q"
+    # sleep(1)
+    comp_board.cells[shot].fire_upon
     # require 'pry'; binding.pry
-    results
+    comp_shot = player_board.cells.keys.sample
+    player_board.cells[comp_shot].fire_upon
+    
+    results(shot, comp_shot)
   end
 
-  def results
-    puts "Your shot on A4 was a miss.
-    My shot on C1 was a miss."
+  def results(shot, comp_shot)
+    puts "Your shot on #{shot} was a #{hit_or_miss_comp(shot)}."
+    puts "My shot on #{comp_shot} was a #{hit_or_miss_player(comp_shot)}."
     turn
   end
+
+  def hit_or_miss_comp(shot)
+    if comp_board.cells[shot].fired_upon?
+      "hit"
+    else
+      "miss"
+    end
+  end
+
+  def hit_or_miss_player(comp_shot)
+    if player_board.cells[comp_shot].fired_upon?
+      "hit"
+    else
+      "miss"
+    end
+  end
+
+
 end
 
 
@@ -113,7 +134,7 @@ end
 #     def valid?
 #         until test.all? { |coordinate| player_board.valid_coordinate?(coordinate)}
 #             puts "invalid, please try again"
-#             test = gets.strip.split
+#             test = gets.strip.upcase.split
 #         end
 #     end
 # end
