@@ -24,28 +24,25 @@ class Board
   end
 
   def valid_coordinate?(coordinate)
-    # require 'pry'; binding.pry
     cells.keys.any? do |key_coordinate|
       key_coordinate == coordinate
     end
   end
 
   def valid_placement?(ship, coordinate_array)
-
     if overlap?(coordinate_array) == false
       valid_placement_array_length?(ship, coordinate_array)
     else
-      puts "Invalid"
-      false 
+      false
     end
   end
 
   def overlap?(coordinate_array)
     coordinate_array.any? do |coordinate|
-      # require 'pry'; binding.pry
+
       cells[coordinate].ship_present?
     end
-    # require 'pry'; binding.pry
+
   end
 
   def valid_placement_array_length?(ship, coordinate_array)
