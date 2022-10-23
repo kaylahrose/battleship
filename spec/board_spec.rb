@@ -18,7 +18,7 @@ RSpec.describe Board do
     board.cells.values.each { |cell| expect(cell).to be_an_instance_of(Cell) }
   end
 
-  xit 'validates coordinates in 4x4 grid' do
+  it 'validates coordinates in 4x4 grid' do
     board = Board.new
 
     expect(board.valid_coordinate?('A1')).to eq(true)

@@ -2,29 +2,29 @@ require './lib/board'
 require './lib/ship'
 require './lib/cell'
 class Gameplay
-  attr_accessor :input, :comp_board, :player_board, :comp_cruiser, :comp_submarine,
-                :player_cruiser, :player_submarine
+  attr_accessor :comp_board, :player_board, :comp_cruiser, :comp_submarine,
+                :player_cruiser, :player_submarine, :input
 
   def initialize
-    @input = nil
     @comp_board = Board.new
     @player_board = Board.new
     @comp_cruiser = Ship.new('Cruiser', 3)
     @comp_submarine = Ship.new('Submarine', 2)
     @player_cruiser = Ship.new('Cruiser', 3)
     @player_submarine = Ship.new('Submarine', 2)
+    @input = nil
   end
 
   def main_menu
-    puts "Welcome to BATTLESHIP\n" + 
-          'Enter p to play. Enter q to quit.'
-    @input = gets.strip
+    welcome_message
+    # puts "Welcome to BATTLESHIP\n" + 
+    #       'Enter p to play. Enter q to quit.'
+  input = gets.strip
     if input == 'p'
       setup
     else
       abort
     end
-    
   end
 
   def setup
@@ -39,21 +39,24 @@ class Gameplay
   end
 
   def player_setup
-    puts "I have laid out my ships on the grid.\n" +
-          "You now need to lay out your two ships.\n" +
-          'The Cruiser is three units long and the Submarine is two units long.'
-    puts player_board.board_render
-    puts 'Enter the squares for the Cruiser (3 spaces):'
-    test = gets.strip.upcase.split
+    # puts "I have laid out my ships on the grid.\n" +
+    #       "You now need to lay out your two ships.\n" +
+    #       'The Cruiser is three units long and the Submarine is two units long.'
+    intstructions
+    # puts player_board.board_render
+    # puts 'Enter the squares for the Cruiser (3 spaces):'
+    @input = gets.strip.upcase.split
+    # require 'pry'; binding.pry
+    validate(@input)
 
-    until test.all? { |coordinate| player_board.valid_coordinate?(coordinate) }
-      puts 'invalid, please try again'
-      test = gets.strip.upcase.split
-    end
+    # until test.all? { |coordinate| player_board.valid_coordinate?(coordinate) }
+    #   puts 'invalid, please try again'
+    #   test = gets.strip.upcase.split
+    # end
 
-    until player_board.place(player_cruiser, test)
+    until player_board.place(player_cruiser, @input)
       puts 'invalid, please try again'
-      test = gets.strip.upcase.split
+      @input = gets.strip.upcase.split
     end
 
     puts player_board.board_render(true)
@@ -73,6 +76,16 @@ class Gameplay
     puts player_board.board_render(true)
     turn
   end
+
+  def validate(input)
+    # require 'pry'; binding.pry
+    until @input.all? { |coordinate| player_board.valid_coordinate?(coordinate) }
+      puts 'invalid, please try again'
+      @input = gets.strip.upcase.split
+    end
+  end
+
+ 
 
   def sanitize
   end
@@ -132,4 +145,22 @@ class Gameplay
       'was a miss'
     end
   end
+
+  # text helper methods
+
+  def welcome_message
+    puts "Welcome to BATTLESHIP\n" + 
+          'Enter p to play. Enter q to quit.'
+  end
+
+  def intstructions
+    puts "I have laid out my ships on the grid.\n" +
+    "You now need to lay out your two ships.\n" +
+    'The Cruiser is three units long and the Submarine is two units long.'
+    puts player_board.board_render
+    puts 'Enter the squares for the Cruiser (3 spaces):'
+  end
+
+
+  
 end

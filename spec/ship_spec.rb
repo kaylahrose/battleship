@@ -23,11 +23,11 @@ RSpec.describe Ship do
       expect(@cruiser.health).to eq(3)
     end
 
-    it 'can float' do
+    it 'can returns if sunk' do
       expect(@cruiser.sunk?).to eq(false)
     end
 
-    it 'can be hit' do
+    it 'can take damage with hit' do
       @cruiser.hit
       expect(@cruiser.health).to eq(2)
     end
