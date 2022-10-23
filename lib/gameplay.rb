@@ -82,17 +82,6 @@ class Gameplay
     puts 'Enter the coordinate for your shot:'
     shot = gets.strip.upcase
     validate_shot(shot)
-
-    # while comp_board.cells[shot].fired_upon?
-    #   puts 'This cell has been fired upon, please try again'
-    #   shot = gets.strip.upcase
-    # end
-    # comp_board.cells[shot].fire_upon
-    comp_shot = player_board.cells.keys.sample
-    comp_shot = player_board.cells.keys.sample while player_board.cells[comp_shot].fired_upon?
-    player_board.cells[comp_shot].fire_upon
-
-    results(shot, comp_shot)
   end
 
   def validate_shot(shot)
@@ -101,6 +90,15 @@ class Gameplay
       shot = gets.strip.upcase
     end
     comp_board.cells[shot].fire_upon
+
+  end
+
+  def computer_shot(shot)
+    comp_shot = player_board.cells.keys.sample
+    comp_shot = player_board.cells.keys.sample while player_board.cells[comp_shot].fired_upon?
+    player_board.cells[comp_shot].fire_upon
+
+    results(shot, comp_shot)
 
   end
 
