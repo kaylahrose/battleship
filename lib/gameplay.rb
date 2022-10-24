@@ -18,13 +18,13 @@ class Gameplay
 
   def main_menu
     welcome_message
-    input = gets.strip
+    input = gets.strip.downcase
     if input == 'p'
       if comp_board.cells.any? { |coordinate, cell| cell.fired_upon? }
         Gameplay.new.setup
       end
-
       setup
+      play
     else
       abort
     end
@@ -41,7 +41,7 @@ class Gameplay
   end
 
   def player_setup
-    intstructions
+    instructions
     @input = gets.strip.upcase.split
     validate_cruiser(@input)
     puts "\n"
@@ -51,7 +51,7 @@ class Gameplay
     validate_sub(@input)
     puts player_board.board_render(true)
     puts "\n" 
-    turn
+    # turn
   end
 
   def validate_cruiser(input)
@@ -73,8 +73,19 @@ class Gameplay
     end
   end
 
+  def play
+    until comp_win? || player_win?
+      turn
+      computer_shot
+      results_turn(@shot, @comp_shot)
+    end
+    results_game
+  end
+
   def turn
     puts '=============COMPUTER BOARD============='
+    # puts comp_board.board_render
+    # FOR DEBUGGING PURPOSES ONLY
     puts comp_board.board_render(true)
     puts '==============PLAYER BOARD=============='
     puts player_board.board_render(true)
@@ -83,49 +94,73 @@ class Gameplay
   end
 
   def fire
-    @shot = gets.strip.upcase
-    validate_shot(@shot)
+    fire_input
+    validate_shot
+    comp_board.cells[shot].fire_upon
   end
 
-  def validate_shot(shot)
-    if comp_board.valid_coordinate?(@shot) == false
+  # if looping through fired_upon, must still confirm shot is valid
+
+  # confirm shot is valid
+  # otherwise loop
+
+  # if valid, confirm shot is fired_upon
+  # otherwise loop
+
+  def validate_shot
+    # require 'pry'; binding.pry
+    validate_coordinate
+    # require 'pry'; binding.pry
+    validate_fired_upon
+    # require 'pry'; binding.pry
+  end
+
+
+  def validate_coordinate
+    # refactor opportunity error message
+    until comp_board.valid_coordinate?(@shot)
       puts "invalid, please try again"
-      fire
+      fire_input
     end 
-    fired_upon?(@shot)
+    # fired_upon(shot)
+    # require 'pry'; binding.pry
+   
   end
 
-  def fired_upon?(shot)
-    if comp_board.cells[@shot].fired_upon?
+  def fire_input
+    @shot = gets.strip.upcase
+  end
+
+  def validate_fired_upon
+    while comp_board.cells[@shot].fired_upon?
       puts 'This cell has been fired upon, please try again'
-      fire
-    else
-      comp_board.cells[@shot].fire_upon
-      computer_shot(@shot)
+      fire_input
+      validate_shot
     end
+    # require 'pry'; binding.pry
   end
 
-  def computer_shot(shot)
-    comp_shot = player_board.cells.keys.sample
-    comp_shot = player_board.cells.keys.sample while player_board.cells[comp_shot].fired_upon?
-    player_board.cells[comp_shot].fire_upon
-
-    results(@shot, comp_shot)
-
+  def computer_shot
+    @comp_shot = player_board.cells.keys.sample
+    @comp_shot = player_board.cells.keys.sample while player_board.cells[@comp_shot].fired_upon?
+    player_board.cells[@comp_shot].fire_upon
   end
 
-  def results(shot, comp_shot)
-    puts "Your shot on #{@shot} #{hit_or_miss_comp(@shot)}."
+  def results_turn(shot, comp_shot)
+    puts "Your shot on #{shot} #{hit_or_miss_comp(shot)}."
     puts "My shot on #{comp_shot} #{hit_or_miss_player(comp_shot)}."
+    sleep(2)
+  end
 
-    if comp_submarine.sunk? && comp_cruiser.sunk?
+  def results_game
+    if player_win?
       sleep(2)
       puts "\n"
       puts "You won!"
       puts "\n"
       sleep(2)
       main_menu
-    elsif player_cruiser.sunk? && player_submarine.sunk?
+    elsif comp_win?
       sleep(2)
       puts "\n"
       puts "I won!"
@@ -133,16 +168,21 @@ class Gameplay
       sleep(2)
       main_menu
     end
-    sleep(2)
+  end
 
-    turn
+  def comp_win?
+    player_cruiser.sunk? && player_submarine.sunk?
+  end
+
+  def player_win?
+    comp_submarine.sunk? && comp_cruiser.sunk?
   end
 
   def hit_or_miss_comp(shot)
     # require 'pry'; binding.pry
-    if comp_board.cells[@shot].ship_present? && comp_board.cells[@shot].ship.sunk?
+    if !comp_board.cells[@shot].empty? && comp_board.cells[@shot].ship.sunk?
       'sunk my ship!'
-    elsif comp_board.cells[@shot].ship_present?
+    elsif !comp_board.cells[@shot].empty?
       'was a hit'
     else
       'was a miss'
@@ -150,9 +190,9 @@ class Gameplay
   end
 
   def hit_or_miss_player(comp_shot)
-    if player_board.cells[comp_shot].ship_present? && player_board.cells[comp_shot].ship.sunk?
+    if !player_board.cells[comp_shot].empty? && player_board.cells[comp_shot].ship.sunk?
       'sunk your ship!'
-    elsif player_board.cells[comp_shot].ship_present?
+    elsif !player_board.cells[comp_shot].empty?
       'was a hit'
     else
       'was a miss'
@@ -169,7 +209,7 @@ class Gameplay
     puts 'Enter p to play. Enter q to quit.'
   end
 
-  def intstructions
+  def instructions
     puts "\n" 
     puts "I have laid out my ships on the grid.\n"
     puts "\n"

@@ -132,12 +132,34 @@ RSpec.describe Board do
   end
 
   it 'randomly places ships' do
+    # blarg test random array sample
+    # possible_arrays could look like
+    #  [["A1", "A2", "A3"],
+    #  ["A2", "A3", "A4"],
+    #  ["B1", "B2", "B3"],
+    #  ["B2", "B3", "B4"],
+    #  ["C1", "C2", "C3"],
+    #  ["C2", "C3", "C4"],
+    #  ["D1", "D2", "D3"],
+    #  ["D2", "D3", "D4"],
+    #  ["A1", "B1", "C1"],
+    #  ["B1", "C1", "D1"],
+    #  ["A2", "B2", "C2"],
+    #  ["B2", "C2", "D2"],
+    #  ["A3", "B3", "C3"],
+    #  ["B3", "C3", "D3"],
+    #  ["A4", "B4", "C4"],
+    #  ["B4", "C4", "D4"]]
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
     submarine = Ship.new('Submarine', 2)
     board.random_place(cruiser)
     board.random_place(submarine)
 
-    expect(board.cells.count { |coord, cell| ship_present? == true }).to eq(5)
+    expect(board.cells.values.count { |cell| cell.empty? == false }).to eq(5)
+    # board.cells.count do |coord, cell| 
+    #   # require 'pry'; binding.pry
+    #   cell.empty? == false
+    # end
   end
 end
