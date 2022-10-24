@@ -51,7 +51,6 @@ class Gameplay
     validate_sub(@input)
     puts player_board.board_render(true)
     puts "\n" 
-    # sleep(2)
     turn
   end
 
@@ -76,7 +75,7 @@ class Gameplay
 
   def turn
     puts '=============COMPUTER BOARD============='
-    puts comp_board.board_render
+    puts comp_board.board_render(true)
     puts '==============PLAYER BOARD=============='
     puts player_board.board_render(true)
     puts 'Enter the coordinate for your shot:'
