@@ -22,7 +22,7 @@ class Cell
 
   def fire_upon
     if ship_present? == true
-      ship.health -= 1
+      ship.hit
       @fired_upon = true
     else
       @fired_upon = true
