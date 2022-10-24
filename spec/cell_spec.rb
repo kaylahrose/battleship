@@ -93,14 +93,15 @@ RSpec.describe Cell do
     end
 
     it 'cell_renders cell with sunk ship' do
+      # BLARG
       cell_2 = Cell.new('C3')
       cruiser = Ship.new('Cruiser', 3)
       cell_2.place_ship(cruiser)
       cell_2.fire_upon
       expect(cruiser.sunk?).to eq(false)
 
-      cruiser.hit
-      cruiser.hit
+      2.times {cruiser.hit}
+      # cruiser.hit
       expect(cruiser.sunk?).to eq(true)
 
       expect(cell_2.cell_render).to eq('X')

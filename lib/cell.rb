@@ -1,6 +1,5 @@
 class Cell
-  attr_reader :coordinate, :damage
-  attr_accessor :ship
+  attr_reader :coordinate, :damage, :ship
 
   def initialize(coordinate)
     @coordinate = coordinate
@@ -21,29 +20,26 @@ class Cell
   end
 
   def fire_upon
-    if ship_present? == true
-      ship.hit
-      @fired_upon = true
-    else
-      @fired_upon = true
-    end
-  end
-
-  def ship_present?
-    # if ship.class == Nil
-    #   false
+    # blarg if time, put guard in gameplay about being able to fire upon cell twice
+    ship.hit if empty? == false
+      # ship.hit
+      # @fired_upon = true
     # else
-    #   true
+      # @fired_upon = true
     # end
-      !@ship.nil?
-
+    @fired_upon = true
   end
+
+  # def ship_present?
+  #   !@ship.nil?
+  # end
 
   def cell_render(show = false)
-    if ship_present?
+    #blarg, create own scenario
+    if empty? == false #if there's a ship on the cell
       if @ship.sunk?
         'X'
-      elsif ship_was_hit(show)
+      elsif @fired_upon
         'H'
       elsif show
         'S'
@@ -52,12 +48,13 @@ class Cell
       end
     elsif @fired_upon == false
       '.'
-    elsif @fired_upon == true && @ship.nil?
+    elsif @fired_upon #== true # && @ship.nil?
       'M'
     end
   end
   
-  def ship_was_hit(show)
-    show && @fired_upon || @fired_upon
-  end
+  # def ship_was_hit(show)
+  #   # show && @fired_upon || @fired_upon
+  #   @fired_upon || @fired_upon
+  # end
 end
