@@ -20,7 +20,6 @@ class Gameplay
     welcome_message
     input = gets.strip
     if input == 'p'
-      # require 'pry'; binding.pry
       if comp_board.cells.any? { |coordinate, cell| cell.fired_upon? }
         Gameplay.new.setup
       end
@@ -72,12 +71,7 @@ class Gameplay
   end
 
   def validate_sub(input)
-    until @input.all? { |coordinate| player_board.valid_coordinate?(coordinate) }
-      puts 'invalid, please try again'
-      @input = gets.strip.upcase.split
-    end
-
-    until player_board.place(player_submarine, @input)
+    until @input.all? { |coordinate| player_board.valid_coordinate?(coordinate) } && player_board.place(player_submarine, @input)
       puts 'invalid, please try again'
       @input = gets.strip.upcase.split
     end
@@ -85,7 +79,7 @@ class Gameplay
 
   def turn
     puts '=============COMPUTER BOARD============='
-    puts comp_board.board_render(true)
+    puts comp_board.board_render
     puts '==============PLAYER BOARD=============='
     puts player_board.board_render(true)
     puts 'Enter the coordinate for your shot:'

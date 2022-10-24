@@ -130,4 +130,14 @@ RSpec.describe Board do
                                     "C . . . . \n" +
                                     "D . . . . \n")
   end
+
+  it 'randomly places ships' do
+    board = Board.new
+    cruiser = Ship.new('Cruiser', 3)
+    submarine = Ship.new('Submarine', 2)
+    board.random_place(cruiser)
+    board.random_place(submarine)
+
+    expect(board.cells.count { |coord, cell| ship_present? == true }).to eq(5)
+  end
 end

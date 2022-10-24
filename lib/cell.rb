@@ -30,7 +30,13 @@ class Cell
   end
 
   def ship_present?
-    !@ship.nil?
+    # if ship.class == Nil
+    #   false
+    # else
+    #   true
+    # end
+      !@ship.nil?
+
   end
 
   def cell_render(show = false)

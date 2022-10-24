@@ -24,6 +24,7 @@ class Board
   end
 
   def valid_coordinate?(coordinate)
+    # require 'pry'; binding.pry
     cells.keys.any? do |key_coordinate|
       key_coordinate == coordinate
     end
