@@ -22,6 +22,8 @@ class Gameplay
     if input == 'p'
       # require 'pry'; binding.pry
       if comp_board.cells.any? { |coordinate, cell| cell.fired_upon? }
+        Gameplay.new.setup
+      end
 
       setup
     else
@@ -53,7 +55,7 @@ class Gameplay
     validate_sub(@input)
     puts player_board.board_render(true)
     puts "\n" 
-    sleep(2)
+    # sleep(2)
     turn
   end
 
@@ -176,12 +178,12 @@ class Gameplay
     puts "\n"
     puts comp_board.board_render
     puts "\n"
-    sleep(2)
+    # sleep(2)
     puts "You now need to lay out your two ships.\n"
-    sleep(2)
+    # sleep(2)
     puts 'The Cruiser is three units long and the Submarine is two units long.'
     puts "\n"
-    sleep(2)
+    # sleep(2)
     puts player_board.board_render
     puts 'Enter the squares for the Cruiser (3 spaces):'
   end
