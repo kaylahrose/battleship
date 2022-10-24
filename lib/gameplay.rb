@@ -38,9 +38,6 @@ class Gameplay
   def computer_setup
     comp_board.random_place(@comp_cruiser)
     comp_board.random_place(@comp_submarine)
-    # puts "\n"
-    # puts comp_board.board_render
-    # puts "\n"
   end
 
   def player_setup
@@ -83,25 +80,12 @@ class Gameplay
     puts '==============PLAYER BOARD=============='
     puts player_board.board_render(true)
     puts 'Enter the coordinate for your shot:'
-    # @shot = gets.strip.upcase
     fire
-    # computer_shot(@shot)
   end
 
   def fire
-    # require 'pry'; binding.pry
     @shot = gets.strip.upcase
     validate_shot(@shot)
-    # until comp_board.valid_coordinate?(@shot)
-    #   puts "invalid, please try again"
-    #   @shot = gets.strip.upcase
-    # end 
-    # while comp_board.cells[@shot].fired_upon? || comp_board.valid_coordinate?(@shot)
-    #   puts 'This cell has been fired upon, please try again'
-    #   @shot = gets.strip.upcase
-    # end
-    # comp_board.cells[@shot].fire_upon
-
   end
 
   def validate_shot(shot)
@@ -115,7 +99,6 @@ class Gameplay
   def fired_upon?(shot)
     if comp_board.cells[@shot].fired_upon?
       puts 'This cell has been fired upon, please try again'
-      # require 'pry'; binding.pry
       fire
     else
       comp_board.cells[@shot].fire_upon
