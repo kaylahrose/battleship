@@ -20,6 +20,9 @@ class Gameplay
     welcome_message
     input = gets.strip
     if input == 'p'
+      # require 'pry'; binding.pry
+      if comp_board.cells.any? { |coordinate, cell| cell.fired_upon? }
+
       setup
     else
       abort
@@ -34,18 +37,23 @@ class Gameplay
   def computer_setup
     comp_board.random_place(@comp_cruiser)
     comp_board.random_place(@comp_submarine)
-    puts comp_board.board_render(true)
+    # puts "\n"
+    # puts comp_board.board_render
+    # puts "\n"
   end
 
   def player_setup
     intstructions
     @input = gets.strip.upcase.split
     validate_cruiser(@input)
+    puts "\n"
     puts player_board.board_render(true)
     puts 'Enter the squares for the Submarine (2 spaces):'
     @input = gets.strip.upcase.split
     validate_sub(@input)
     puts player_board.board_render(true)
+    puts "\n" 
+    sleep(2)
     turn
   end
 
@@ -75,7 +83,7 @@ class Gameplay
 
   def turn
     puts '=============COMPUTER BOARD============='
-    puts comp_board.board_render
+    puts comp_board.board_render(true)
     puts '==============PLAYER BOARD=============='
     puts player_board.board_render(true)
     puts 'Enter the coordinate for your shot:'
@@ -112,12 +120,21 @@ class Gameplay
     puts "My shot on #{comp_shot} #{hit_or_miss_player(comp_shot)}."
 
     if comp_submarine.sunk? && comp_cruiser.sunk?
+      sleep(2)
+      puts "\n"
       puts "You won!"
+      puts "\n"
+      sleep(2)
       main_menu
     elsif player_cruiser.sunk? && player_submarine.sunk?
+      sleep(2)
+      puts "\n"
       puts "I won!"
+      puts "\n"
+      sleep(2)
       main_menu
     end
+    sleep(2)
 
     turn
   end
@@ -146,14 +163,25 @@ class Gameplay
   # text helper methods
 
   def welcome_message
-    puts "Welcome to BATTLESHIP\n" + 
-          'Enter p to play. Enter q to quit.'
+    puts " \n" +
+          "============ Welcome to BATTLESHIP ============\n" + 
+          " \n" 
+          sleep(2)
+    puts 'Enter p to play. Enter q to quit.'
   end
 
   def intstructions
-    puts "I have laid out my ships on the grid.\n" +
-    "You now need to lay out your two ships.\n" +
-    'The Cruiser is three units long and the Submarine is two units long.'
+    puts "\n" 
+    puts "I have laid out my ships on the grid.\n"
+    puts "\n"
+    puts comp_board.board_render
+    puts "\n"
+    sleep(2)
+    puts "You now need to lay out your two ships.\n"
+    sleep(2)
+    puts 'The Cruiser is three units long and the Submarine is two units long.'
+    puts "\n"
+    sleep(2)
     puts player_board.board_render
     puts 'Enter the squares for the Cruiser (3 spaces):'
   end
