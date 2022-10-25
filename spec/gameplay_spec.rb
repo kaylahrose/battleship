@@ -20,12 +20,14 @@ RSpec.describe Gameplay do
     expect(gameplay.comp_board.cells.count { |coord, cell| cell.empty? == false }).to eq(5)
   end
 
-  xit 'validates cruiser placement' do
-    gameplay.computer_setup
-    gameplay.validate_cruiser(("slajfk").split)
-    expect(gameplay.validate_cruiser(("alksjd").split)).to eq("invalid, please try again")
-    expect(gameplay.validate_cruiser(("a5").split)).to eq("invalid, please try again")
-  end
+  it 'validates shots' do
+    # expect 'invalid, please try again',
+    # expect 'This cell has been fired upon, please try again'
+    # expect cell fired_upon == false
+    # expect cell fired_upon == true
+    @gameplay.setup
+    expect(@gameplay.validate_shot("alksjd")).to eq("invalid, please try again")
+    expect(@gameplay.validate_shot("a5")).to eq("invalid, please try again")
 
   it 'fires at computers board' do
     gameplay.comp_board.cells["A1"].fire_upon
@@ -41,10 +43,5 @@ RSpec.describe Gameplay do
     3.times {gameplay.player_cruiser.hit}
     3.times {gameplay.player_submarine.hit}
     expect(gameplay.comp_win?).to eq(true)
-  end
-
-  xit 'returns shot confirmation string' do
-    gameplay.comp_board.place(gameplay.comp_cruiser, ["A1", "A2", "A3"])
-    expect(gameplay.hit_or_miss_comp("A4")).to eq('was a miss')
   end
 end
