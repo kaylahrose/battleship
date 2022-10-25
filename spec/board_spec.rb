@@ -98,24 +98,15 @@ RSpec.describe Board do
     expect(cell_3.ship == cell_2.ship).to eq(true)
   end
 
-  xit 'checks for overlap false' do
+  xit 'checks for overlap' do
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
 
     board.place(cruiser, %w[A1 A2 A3])
     submarine = Ship.new('Submarine', 2)
 
-    expect(board.valid_placement?(submarine, %w[B1 C1])).to eq(false)
-  end
-
-  xit 'checks for overlap true' do
-    board = Board.new
-    cruiser = Ship.new('Cruiser', 3)
-
-    board.place(cruiser, %w[A1 A2 A3])
-    submarine = Ship.new('Submarine', 2)
-
-    expect(board.valid_placement?(submarine, %w[A1 B1])).to eq(true)
+    expect(board.valid_placement?(submarine, %w[B1 C1])).to eq(true)
+    expect(board.valid_placement?(submarine, %w[A1 B1])).to eq(false)
   end
 
   it 'can render board' do
