@@ -1,7 +1,7 @@
 require './lib/cell'
 
 class Board
-  attr_reader :cells
+  attr_reader :cells, :letter, :number
 
   def initialize
     @cells = {
@@ -88,6 +88,7 @@ class Board
   def separate_coordinates(coordinate_array)
     @letter = []
     @number = []
+    # require 'pry'; binding.pry
     coordinate_array.each do |coordinate|
       @letter << coordinate[0]
       @number << coordinate[1]
