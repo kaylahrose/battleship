@@ -4,16 +4,12 @@ require './lib/board'
 
 RSpec.describe Board do
   it 'exists' do
-    # require 'pry'; binding.pry
     board = Board.new
-    # require 'pry'; binding.pry
 
     expect(board).to be_an_instance_of(Board)
   end
 
-
   it 'has a hash of cells' do
-
     board = Board.new
 
     # It’s a hash, it should have 16 key/value pairs, and those keys point to cell objects.
@@ -22,21 +18,14 @@ RSpec.describe Board do
     board.cells.values.each { |cell| expect(cell).to be_an_instance_of(Cell) }
   end
 
-
   it 'validates coordinates in 4x4 grid' do
-
     board = Board.new
 
     expect(board.valid_coordinate?('A1')).to eq(true)
-    # require 'pry'; binding.pry
     expect(board.valid_coordinate?('D4')).to eq(true)
-    # require 'pry'; binding.pry
     expect(board.valid_coordinate?('A5')).to eq(false)
-    # require 'pry'; binding.pry
     expect(board.valid_coordinate?('E1')).to eq(false)
-    # require 'pry'; binding.pry
     expect(board.valid_coordinate?('A22')).to eq(false)
-    # require 'pry'; binding.pry
   end
 
   it 'validates placement by array length' do
@@ -54,7 +43,6 @@ RSpec.describe Board do
     cruiser = Ship.new('Cruiser', 3)
     submarine = Ship.new('Submarine', 2)
     board.valid_placement?(cruiser, %w[A1 A2 A4])
-    # require 'pry'; binding.pry
 
     expect(board.valid_placement?(cruiser, %w[A1 A2 A4])).to eq(false)
     expect(board.valid_placement?(submarine, %w[A1 C1])).to eq(false)
@@ -76,8 +64,8 @@ RSpec.describe Board do
     cruiser = Ship.new('Cruiser', 3)
     submarine = Ship.new('Submarine', 2)
 
-    # expect(board.valid_placement?(cruiser, ["B1", "C1", "D1"])).to eq(true)
-    # expect(board.valid_placement?(submarine, ["A1", "A2"])).to eq(true)
+    expect(board.valid_placement?(cruiser, %w[B1 C1 D1])).to eq(true)
+    expect(board.valid_placement?(submarine, %w[A1 A2])).to eq(true)
     expect(board.valid_placement?(cruiser, %w[A1 A4 A3])).to eq(false)
     expect(board.valid_placement?(cruiser, %w[A1 D1 C1])).to eq(false)
   end
@@ -87,7 +75,7 @@ RSpec.describe Board do
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
     board.place(cruiser, %w[A1 A2 A3])
-    # require 'pry'; binding.pry
+
     cell_1 = board.cells['A1']
     cell_2 = board.cells['A2']
     cell_3 = board.cells['A3']
@@ -112,17 +100,18 @@ RSpec.describe Board do
 
   it 'checks for overlap' do
     board = Board.new
-    cruiser = Ship.new("Cruiser", 3)
-    board.place(cruiser, ["A1", "A2", "A3"])
-    submarine = Ship.new("Submarine", 2)
-    # require 'pry'; binding.pry
-    expect(board.valid_placement?(submarine, ["A1", "B1"])).to eq(false)
+    cruiser = Ship.new('Cruiser', 3)
+
+    board.place(cruiser, %w[A1 A2 A3])
+    submarine = Ship.new('Submarine', 2)
+
+    expect(board.valid_placement?(submarine, %w[A1 B1])).to eq(false)
   end
 
   it 'can render board' do
     board = Board.new
-    cruiser = Ship.new("Cruiser", 3)
-    board.place(cruiser, ["A1", "A2", "A3"])
+    cruiser = Ship.new('Cruiser', 3)
+    board.place(cruiser, %w[A1 A2 A3])
     expect(board.board_render).to eq("  1 2 3 4 \n" +
                               "A . . . . \n" +
                               "B . . . . \n" +
@@ -130,14 +119,47 @@ RSpec.describe Board do
                               "D . . . . \n")
   end
 
-  xit 'can render board(true)' do
+  it 'can render board(true)' do
     board = Board.new
-    cruiser = Ship.new("Cruiser", 3)
-    board.place(cruiser, ["A1", "A2", "A3"])
+    cruiser = Ship.new('Cruiser', 3)
+    board.place(cruiser, %w[A1 A2 A3])
+
     expect(board.board_render(true)).to eq("  1 2 3 4 \n" +
                                     "A S S S . \n" +
                                     "B . . . . \n" +
                                     "C . . . . \n" +
                                     "D . . . . \n")
+  end
+
+  it 'randomly places ships' do
+    # blarg test random array sample
+    # possible_arrays could look like
+    #  [["A1", "A2", "A3"],
+    #  ["A2", "A3", "A4"],
+    #  ["B1", "B2", "B3"],
+    #  ["B2", "B3", "B4"],
+    #  ["C1", "C2", "C3"],
+    #  ["C2", "C3", "C4"],
+    #  ["D1", "D2", "D3"],
+    #  ["D2", "D3", "D4"],
+    #  ["A1", "B1", "C1"],
+    #  ["B1", "C1", "D1"],
+    #  ["A2", "B2", "C2"],
+    #  ["B2", "C2", "D2"],
+    #  ["A3", "B3", "C3"],
+    #  ["B3", "C3", "D3"],
+    #  ["A4", "B4", "C4"],
+    #  ["B4", "C4", "D4"]]
+    board = Board.new
+    cruiser = Ship.new('Cruiser', 3)
+    submarine = Ship.new('Submarine', 2)
+    board.random_place(cruiser)
+    board.random_place(submarine)
+
+    expect(board.cells.values.count { |cell| cell.empty? == false }).to eq(5)
+    # board.cells.count do |coord, cell| 
+    #   # require 'pry'; binding.pry
+    #   cell.empty? == false
+    # end
   end
 end

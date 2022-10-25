@@ -1,6 +1,5 @@
 class Cell
-  attr_reader :coordinate, :damage
-  attr_accessor :ship
+  attr_reader :coordinate, :damage, :ship
 
   def initialize(coordinate)
     @coordinate = coordinate
@@ -21,31 +20,26 @@ class Cell
   end
 
   def fire_upon
-    if ship_present? == true
-      ship.health -= 1
-      @fired_upon = true
-    else
-      @fired_upon = true
-      # require 'pry'; binding.pry
-    end
+    # blarg if time, put guard in gameplay about being able to fire upon cell twice
+    ship.hit if empty? == false
+      # ship.hit
+      # @fired_upon = true
+    # else
+      # @fired_upon = true
+    # end
+    @fired_upon = true
   end
 
-  def ship_present?
-    !@ship.nil?
-    # require 'pry'; binding.pry
-  end
-  # returns a String representation of the Cell for when we need to print the board
-  #  A cell can potentially be rendered as:
+  # def ship_present?
+  #   !@ship.nil?
+  # end
 
-  # ”.” if the cell has not been fired upon.
-  # “M” if the cell has been fired upon and it does not contain a ship (the shot was a miss).
-  # “H” if the cell has been fired upon and it contains a ship (the shot was a hit).
-  # “X” if the cell has been fired upon and its ship has been sunk.
   def cell_render(show = false)
-    if ship_present?
+    #blarg, create own scenario
+    if empty? == false #if there's a ship on the cell
       if @ship.sunk?
         'X'
-      elsif ship_was_hit(show)
+      elsif @fired_upon
         'H'
       elsif show
         'S'
@@ -54,12 +48,13 @@ class Cell
       end
     elsif @fired_upon == false
       '.'
-    elsif @fired_upon == true && @ship.nil?
+    elsif @fired_upon #== true # && @ship.nil?
       'M'
     end
   end
-
-  def ship_was_hit(show)
-    show && @fired_upon || @fired_upon
-  end
+  
+  # def ship_was_hit(show)
+  #   # show && @fired_upon || @fired_upon
+  #   @fired_upon || @fired_upon
+  # end
 end
