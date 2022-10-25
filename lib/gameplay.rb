@@ -25,8 +25,11 @@ class Gameplay
       end
       setup
       play
+    elsif input == 'q'
+      abort 
     else
-      abort
+      puts 'please only enter: p or q'
+      main_menu
     end
   end
 
@@ -50,7 +53,7 @@ class Gameplay
     @input = gets.strip.upcase.split
     validate_sub(@input)
     puts player_board.board_render(true)
-    puts "\n" 
+    puts "\n"
     # turn
   end
 
@@ -121,10 +124,10 @@ class Gameplay
     until comp_board.valid_coordinate?(@shot)
       puts "invalid, please try again"
       fire_input
-    end 
+    end
     # fired_upon(shot)
     # require 'pry'; binding.pry
-   
+
   end
 
   def fire_input
@@ -203,14 +206,14 @@ class Gameplay
 
   def welcome_message
     puts " \n" +
-          "============ Welcome to BATTLESHIP ============\n" + 
-          " \n" 
+          "============ Welcome to BATTLESHIP ============\n" +
+          " \n"
           sleep(2)
     puts 'Enter p to play. Enter q to quit.'
   end
 
   def instructions
-    puts "\n" 
+    puts "\n"
     puts "I have laid out my ships on the grid.\n"
     puts "\n"
     puts comp_board.board_render
@@ -226,5 +229,5 @@ class Gameplay
   end
 
 
-  
+
 end
