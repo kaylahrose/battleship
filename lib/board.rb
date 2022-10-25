@@ -54,9 +54,9 @@ class Board
 
   def consecutive_coordinates?(coordinate_array)
     separate_coordinates(coordinate_array)
-    if @@letter.uniq.size <= 1
+    if @letter.uniq.size <= 1
       consec_coord_num?
-    elsif @@number.uniq.size <= 1
+    elsif @number.uniq.size <= 1
       consec_coord_letter?
     else
       false
@@ -64,25 +64,25 @@ class Board
   end
 
   def separate_coordinates(coordinate_array)
-    @@letter = []
-    @@number = []
+    @letter = []
+    @number = []
     coordinate_array.each do |coordinate|
-      @@letter << coordinate[0]
-      @@number << coordinate[1]
+      @letter << coordinate[0]
+      @number << coordinate[1]
     end
   end
 
   def consec_coord_num?
-    if @@number == @@number.sort
-      @@number[-1].to_i == @@number[0].to_i + (@@number.length - 1)
+    if @number == @number.sort
+      @number[-1].to_i == @number[0].to_i + (@number.length - 1)
     else
       false
     end
   end
 
   def consec_coord_letter?
-    if @@letter == @@letter.sort
-      @@letter[-1].ord == @@letter[0].ord + (@@letter.length - 1)
+    if @letter == @letter.sort
+      @letter[-1].ord == @letter[0].ord + (@letter.length - 1)
     else
       false
     end
