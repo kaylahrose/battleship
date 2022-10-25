@@ -2,7 +2,7 @@ require './lib/board'
 require './lib/ship'
 require './lib/cell'
 class Gameplay
-  attr_accessor :comp_board, :player_board, :comp_cruiser, :comp_submarine,
+  attr_reader :comp_board, :player_board, :comp_cruiser, :comp_submarine,
                 :player_cruiser, :player_submarine, :input, :shot
 
   def initialize
@@ -58,6 +58,7 @@ class Gameplay
   end
 
   def validate_cruiser(input)
+    # require 'pry'; binding.pry
     until @input.all? { |coordinate| player_board.valid_coordinate?(coordinate) }
       puts 'invalid, please try again'
       @input = gets.strip.upcase.split
@@ -182,7 +183,7 @@ class Gameplay
   end
 
   def hit_or_miss_comp(shot)
-    # require 'pry'; binding.pry
+    require 'pry'; binding.pry
     if !comp_board.cells[@shot].empty? && comp_board.cells[@shot].ship.sunk?
       'sunk my ship!'
     elsif !comp_board.cells[@shot].empty?
@@ -218,7 +219,6 @@ class Gameplay
     puts "\n"
     puts comp_board.board_render
     puts "\n"
-    # sleep(2)
     puts "You now need to lay out your two ships.\n"
     # sleep(2)
     puts 'The Cruiser is three units long and the Submarine is two units long.'

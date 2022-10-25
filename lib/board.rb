@@ -144,34 +144,6 @@ class Board
     row.compact.join(' ')
   end
 
-  # def row_a(show)
-  #   a = cells.map do |coordinate, cell|
-  #     cell.cell_render(show)  if coordinate[0] == 'A'
-  #   end
-  #   a.compact.join(' ')
-  # end
-
-  # def row_b(show)
-  #   b = cells.map do |coordinate, cell|
-  #     cell.cell_render(show)  if coordinate[0] == 'B'
-  #   end
-  #   b.compact.join(' ')
-  # end
-
-  # def row_c(show)
-  #   c = cells.map do |coordinate, cell|
-  #     cell.cell_render(show)  if coordinate[0] == 'C'
-  #   end
-  #   c.compact.join(' ')
-  # end
-
-  # def row_d(show)
-  #   d = cells.map do |coordinate, cell|
-  #     cell.cell_render(show)  if coordinate[0] == 'D'
-  #   end
-  #   d.compact.join(' ')
-  # end
-
   def random_place(ship)
     possible_arrays = []
     ('A'..'D').to_a.each do |letter|
@@ -237,26 +209,26 @@ end
 #   end
 # end
 # array
-# # => ["A1",
-# #  "A2",
-# #  "A3",
-# #  "A4",
-# #  "B1",
-# #  "B2",
-# #  "B3",
-# #  "B4",
-# #  "C1",
-# #  "C2",
-# #  "C3",
-# #  "C4",
-# #  "D1",
-# #  "D2",
-# #  "D3",
-# #  "D4",
-# #  "E1",
-# #  "E2",
-# #  "E3",
-# #  "E4"]
+# => ["A1",
+#  "A2",
+#  "A3",
+#  "A4",
+#  "B1",
+#  "B2",
+#  "B3",
+#  "B4",
+#  "C1",
+#  "C2",
+#  "C3",
+#  "C4",
+#  "D1",
+#  "D2",
+#  "D3",
+#  "D4",
+#  "E1",
+#  "E2",
+#  "E3",
+#  "E4"]
 # h = {}
 # array.each do |coord|
 #   h[coord] = Cell.new(coord)
