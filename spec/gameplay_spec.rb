@@ -31,4 +31,11 @@ RSpec.describe Gameplay do
     3.times {gameplay.player_submarine.hit}
     expect(gameplay.comp_win?).to eq(true)
   end
+
+  it 'checks if player won' do
+    expect(gameplay.player_win?).to eq(false)
+    3.times {gameplay.comp_cruiser.hit}
+    3.times {gameplay.comp_submarine.hit}
+    expect(gameplay.player_win?).to eq(true)
+  end
 end
