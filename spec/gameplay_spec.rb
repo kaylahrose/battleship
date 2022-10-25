@@ -27,7 +27,7 @@ RSpec.describe Gameplay do
   end
 
   it 'validates shots' do
-    # expect 'invalid, please try again', 
+    # expect 'invalid, please try again',
     # expect 'This cell has been fired upon, please try again'
     # expect cell fired_upon == false
     # expect cell fired_upon == true
@@ -45,6 +45,6 @@ RSpec.describe Gameplay do
   it 'shoots at players board' do
     expect(@gameplay.player_board.cells.count { |coord, cell| cell.fired_upon?}).to eq(0)
     @gameplay.computer_shot("A1")
-    
+
   end
 end
