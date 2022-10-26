@@ -1,7 +1,7 @@
 require './lib/cell'
 
 class Board
-  attr_reader :cells
+  attr_reader :cells, :letter, :number
 
   def initialize
     @cells = {
@@ -22,7 +22,6 @@ class Board
       'D3' => Cell.new('D3'),
       'D4' => Cell.new('D4')
     }
-
   end
 
   # def initialize(width, height)
@@ -45,14 +44,12 @@ class Board
   # end
 
   def valid_coordinate?(coordinate)
-    # require 'pry'; binding.pry
     cells.keys.any? do |key_coordinate|
       key_coordinate == coordinate
     end
   end
 
   def valid_placement?(ship, coordinate_array)
-    # are the coordinates being passed cvalid_coordinates?
     if overlap?(coordinate_array) == false
       valid_placement_array_length?(ship, coordinate_array)
     else
@@ -120,26 +117,17 @@ class Board
     end
   end
 
-  # def board_render(show = false)
-  #   "  1 2 3 4 \n" +
-  #   "A #{row_a(show)} \n" +
-  #   "B #{row_b(show)} \n" +
-  #   "C #{row_c(show)} \n" +
-  #   "D #{row_d(show)} \n"
-  # end
-
   def board_render(show = false)
     "  1 2 3 4 \n" +
-    "A #{row_render(show, "A")} \n" +
-    "B #{row_render(show, "B")} \n" +
-    "C #{row_render(show, "C")} \n" +
-    "D #{row_render(show, "D")} \n"
+      "A #{row_render(show, 'A')} \n" +
+      "B #{row_render(show, 'B')} \n" +
+      "C #{row_render(show, 'C')} \n" +
+      "D #{row_render(show, 'D')} \n"
   end
-
 
   def row_render(show, row_letter)
     row = cells.map do |coordinate, cell|
-      cell.cell_render(show)  if coordinate[0] == row_letter
+      cell.cell_render(show) if coordinate[0] == row_letter
     end
     row.compact.join(' ')
   end
@@ -197,7 +185,6 @@ end
 # ("  #{(1..10.to_a.join(" "))} \n"
 # # ^^ for board render instead of ("  1 2 ... 9 10 ")
 
-
 # height = 5
 # # last = nil
 # last = (("A".ord) + (height - 1)).chr
@@ -234,10 +221,7 @@ end
 #   h[coord] = Cell.new(coord)
 # end
 
-
 # # get a range, [a1 ... d4], iterate through
-
-
 
 # def initialize(width, height)
 #   height = 5
@@ -273,9 +257,6 @@ end
 #     counter +=1
 #   end
 # end
-
-
-
 
 # def random_place(ship)
 #   possible_arrays = []

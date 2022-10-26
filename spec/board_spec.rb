@@ -12,7 +12,6 @@ RSpec.describe Board do
   it 'has a hash of cells' do
     board = Board.new
 
-    # It’s a hash, it should have 16 key/value pairs, and those keys point to cell objects.
     expect(board.cells).to be_an_instance_of(Hash)
     expect(board.cells.keys.length).to eq(16)
     board.cells.values.each { |cell| expect(cell).to be_an_instance_of(Cell) }
@@ -33,9 +32,11 @@ RSpec.describe Board do
     cruiser = Ship.new('Cruiser', 3)
     submarine = Ship.new('Submarine', 2)
 
-    # expect the number of coordinates in the array should be the same as the length of the ship
     expect(board.valid_placement?(cruiser, %w[A1 A2])).to eq(false)
     expect(board.valid_placement?(submarine, %w[A2 A3 A4])).to eq(false)
+    expect(board.valid_placement_array_length?(cruiser, %w[A1 A2])).to eq(false)
+    expect(board.valid_placement_array_length?(submarine, %w[A2 A3 A4])).to eq(false)
+    expect(board.valid_placement_array_length?(submarine, %w[A2 A3])).to eq(true)
   end
 
   it 'validates placement with consecutive coordinates' do
@@ -48,6 +49,34 @@ RSpec.describe Board do
     expect(board.valid_placement?(submarine, %w[A1 C1])).to eq(false)
     expect(board.valid_placement?(cruiser, %w[A3 A2 A1])).to eq(false)
     expect(board.valid_placement?(submarine, %w[C1 B1])).to eq(false)
+
+    expect(board.consecutive_coordinates?(%w[A1 A2 A4])).to eq(false)
+    expect(board.consecutive_coordinates?(%w[A1 C1])).to eq(false)
+    expect(board.consecutive_coordinates?(%w[A3 A2 A1])).to eq(false)
+    expect(board.consecutive_coordinates?(%w[C1 B1])).to eq(false)
+  end
+
+  it 'separates coordinates' do
+    board = Board.new
+    board.separate_coordinates(%w[A1 A2])
+    # require 'pry'; binding.pry
+    expect(board.letter).to eq(%w[A A])
+  end
+
+  it 'returns if coordinates are consecutive by number' do
+    board = Board.new
+    board.separate_coordinates(%w[A1 A2])
+    expect(board.consec_coord_num?).to eq(true)
+    board.separate_coordinates(%w[A2 B2])
+    expect(board.consec_coord_num?).to eq(false)
+  end
+
+  it 'returns if coordinates are consecutive by letter' do
+    board = Board.new
+    board.separate_coordinates(%w[A1 A2])
+    expect(board.consec_coord_letter?).to eq(false)
+    board.separate_coordinates(%w[A2 B2])
+    expect(board.consec_coord_letter?).to eq(true)
   end
 
   it 'validates placement no diagonal coordinates' do
@@ -70,7 +99,6 @@ RSpec.describe Board do
     expect(board.valid_placement?(cruiser, %w[A1 D1 C1])).to eq(false)
   end
 
-  # placing_ships interaction pattern
   it 'places cruiser on board' do
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
@@ -98,7 +126,7 @@ RSpec.describe Board do
     expect(cell_3.ship == cell_2.ship).to eq(true)
   end
 
-  xit 'checks for overlap' do
+  it 'checks for overlap' do
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
 
@@ -107,6 +135,15 @@ RSpec.describe Board do
 
     expect(board.valid_placement?(submarine, %w[B1 C1])).to eq(true)
     expect(board.valid_placement?(submarine, %w[A1 B1])).to eq(false)
+
+    expect(board.overlap?(%w[B1 C1])).to eq(false)
+    expect(board.overlap?(%w[A1 B1])).to eq(true)
+  end
+
+  it 'renders cells by row' do
+    board = Board.new
+    expect(board.row_render(false, 'A')).to eq('. . . .')
+    expect(board.row_render(true, 'A')).to eq('. . . .')
   end
 
   it 'can render board' do
@@ -158,9 +195,5 @@ RSpec.describe Board do
     board.random_place(submarine)
 
     expect(board.cells.values.count { |cell| cell.empty? == false }).to eq(5)
-    # board.cells.count do |coord, cell|
-    #   # require 'pry'; binding.pry
-    #   cell.empty? == false
-    # end
   end
 end

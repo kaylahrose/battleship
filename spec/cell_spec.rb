@@ -2,27 +2,25 @@ require './lib/ship'
 require './lib/cell'
 
 RSpec.describe Cell do
-  # iteration 1
-  before(:each) do
-    @cell = Cell.new('B4')
-    @cell_1 = Cell.new('B4')
-  end
+  let(:cruiser) { Ship.new('Cruiser', 3) }
+  let(:cell) { Cell.new('B4') }
+  let(:cell_1) { Cell.new('B4') }
 
   describe '#initialize' do
     it 'exists' do
-      expect(@cell).to be_an_instance_of(Cell)
+      expect(cell).to be_an_instance_of(Cell)
     end
 
     it 'has a coordinate' do
-      expect(@cell.coordinate).to eq('B4')
+      expect(cell.coordinate).to eq('B4')
     end
 
     it 'has no ship' do
-      expect(@cell.ship).to eq(nil)
+      expect(cell.ship).to eq(nil)
     end
 
     it 'is empty by default' do
-      expect(@cell.empty?).to eq(true)
+      expect(cell.empty?).to eq(true)
     end
 
     it 'is an instance of the Ship class' do
@@ -32,36 +30,36 @@ RSpec.describe Cell do
 
     it 'places ship' do
       cruiser = Ship.new('Cruiser', 3)
-      @cell.place_ship(cruiser)
-      @cell.ship
-      expect(@cell.ship).to be_an_instance_of(Ship)
+      cell.place_ship(cruiser)
+      cell.ship
+      expect(cell.ship).to be_an_instance_of(Ship)
     end
 
     it 'returns if empty' do
       cruiser = Ship.new('Cruiser', 3)
-      @cell.place_ship(cruiser)
-      @cell.ship
-      expect(@cell.empty?).to eq(false)
+      cell.place_ship(cruiser)
+      cell.ship
+      expect(cell.empty?).to eq(false)
     end
 
     it 'returns if fired at' do
       cruiser = Ship.new('Cruiser', 3)
-      @cell.place_ship(cruiser)
-      expect(@cell.fired_upon?).to eq(false)
+      cell.place_ship(cruiser)
+      expect(cell.fired_upon?).to eq(false)
 
-      @cell.fire_upon
-      expect(@cell.fired_upon?).to eq(true)
+      cell.fire_upon
+      expect(cell.fired_upon?).to eq(true)
     end
 
     it 'reduces ships health when fired at' do
       cruiser = Ship.new('Cruiser', 3)
-      @cell.place_ship(cruiser)
-      @cell.fire_upon
-      expect(@cell.ship.health).to eq(2)
+      cell.place_ship(cruiser)
+      cell.fire_upon
+      expect(cell.ship.health).to eq(2)
     end
 
     it 'cell_renders new cell' do
-      expect(@cell_1.cell_render).to eq('.')
+      expect(cell_1.cell_render).to eq('.')
     end
 
     it 'cell_renders empty fired at cell' do
@@ -100,8 +98,7 @@ RSpec.describe Cell do
       cell_2.fire_upon
       expect(cruiser.sunk?).to eq(false)
 
-      2.times {cruiser.hit}
-      # cruiser.hit
+      2.times { cruiser.hit }
       expect(cruiser.sunk?).to eq(true)
 
       expect(cell_2.cell_render).to eq('X')
