@@ -54,11 +54,9 @@ class Gameplay
     validate_sub(@input)
     puts player_board.board_render(true)
     puts "\n"
-    # turn
   end
 
   def validate_cruiser(input)
-    # require 'pry'; binding.pry
     until @input.all? { |coordinate| player_board.valid_coordinate?(coordinate) }
       puts 'invalid, please try again'
       @input = gets.strip.upcase.split
@@ -88,9 +86,7 @@ class Gameplay
 
   def turn
     puts '=============COMPUTER BOARD============='
-    # puts comp_board.board_render
-    # FOR DEBUGGING PURPOSES ONLY
-    puts comp_board.board_render(true)
+    puts comp_board.board_render
     puts '==============PLAYER BOARD=============='
     puts player_board.board_render(true)
     puts 'Enter the coordinate for your shot:'
@@ -103,20 +99,9 @@ class Gameplay
     comp_board.cells[shot].fire_upon
   end
 
-  # if looping through fired_upon, must still confirm shot is valid
-
-  # confirm shot is valid
-  # otherwise loop
-
-  # if valid, confirm shot is fired_upon
-  # otherwise loop
-
   def validate_shot
-    # require 'pry'; binding.pry
     validate_coordinate
-    # require 'pry'; binding.pry
     validate_fired_upon
-    # require 'pry'; binding.pry
   end
 
 
@@ -126,9 +111,6 @@ class Gameplay
       puts "invalid, please try again"
       fire_input
     end
-    # fired_upon(shot)
-    # require 'pry'; binding.pry
-
   end
 
   def fire_input
@@ -141,7 +123,6 @@ class Gameplay
       fire_input
       validate_shot
     end
-    # require 'pry'; binding.pry
   end
 
   def computer_shot
@@ -158,18 +139,10 @@ class Gameplay
 
   def results_game
     if player_win?
-      sleep(2)
-      puts "\n"
-      puts "You won!"
-      puts "\n"
-      sleep(2)
+      you_won_message
       main_menu
     elsif comp_win?
-      sleep(2)
-      puts "\n"
-      puts "I won!"
-      puts "\n"
-      sleep(2)
+      i_won_message
       main_menu
     end
   end
@@ -183,7 +156,6 @@ class Gameplay
   end
 
   def hit_or_miss_comp(shot)
-    require 'pry'; binding.pry
     if !comp_board.cells[@shot].empty? && comp_board.cells[@shot].ship.sunk?
       'sunk my ship!'
     elsif !comp_board.cells[@shot].empty?
@@ -206,9 +178,15 @@ class Gameplay
   # text helper methods
 
   def welcome_message
-    puts " \n" +
-          "============ Welcome to BATTLESHIP ============\n" +
-          " \n"
+    puts "                                                                       \n" +
+    "                                                                       \n" +
+    "                                                                       \n" +
+         "                                                                       \n" +
+         "======================== Welcome to BATTLESHIP ========================\n" +
+         "                                                                       \n" +
+         "                                                                       \n" +
+         "                                                                       \n" +
+         " \n"
           sleep(2)
     puts 'Enter p to play. Enter q to quit.'
   end
@@ -228,6 +206,36 @@ class Gameplay
     puts 'Enter the squares for the Cruiser (3 spaces):'
   end
 
+  def you_won_message
+    sleep(2)
+      puts "\n"
+      puts "                                                                       \n" +
+           "                                                                       \n" +
+           "                                                                       \n" +
+           "                                                                       \n" +
+           "============================== You Won! ===============================\n" +
+           "                                                                       \n" +
+           "                                                                       \n" +
+           "                                                                       \n" +
+           " \n"
+      puts "You won!"
+            puts "\n"
+      sleep(2)
+  
 
+  end
 
+  def i_won_message
+    puts "\n"
+    puts "                                                                       \n" +
+         "                                                                       \n" +
+         "                                                                       \n" +
+         "                                                                       \n" +
+         "=============================== I Won! ================================\n" +
+         "                                                                       \n" +
+         "                                                                       \n" +
+         "                                                                       \n" +
+         " \n"
+    sleep(2)
+  end
 end
