@@ -1,12 +1,7 @@
 require './lib/ship'
 
 RSpec.describe Ship do
-  # iteration 1
   let(:cruiser) { Ship.new('Cruiser', 3) }
-  # before(:each) do
-  #   cruiser = Ship.new('Cruiser', 3)
-  #   @submarine = Ship.new('Submarine', 2)
-  # end
 
   describe '#initialize' do
     it 'exists' do
@@ -35,12 +30,10 @@ RSpec.describe Ship do
       end
 
       it 'can take damage with hit' do
-        # cruiser.hit
         expect(cruiser.health).to eq(2)
       end
 
       it 'can be sunk' do
-        # cruiser.hit
         expect(cruiser.health).to eq(2)
         cruiser.hit
         expect(cruiser.health).to eq(1)
@@ -49,20 +42,5 @@ RSpec.describe Ship do
         expect(cruiser.sunk?).to eq(true)
       end
     end
-
-    # it 'can take damage with hit' do
-    #   cruiser.hit
-    #   expect(cruiser.health).to eq(2)
-    # end
-
-    # it 'can be sunk' do
-    #   cruiser.hit
-    #   expect(cruiser.health).to eq(2)
-    #   cruiser.hit
-    #   expect(cruiser.health).to eq(1)
-    #   expect(cruiser.sunk?).to eq(false)
-    #   cruiser.hit
-    #   expect(cruiser.sunk?).to eq(true)
-    # end
   end
 end
