@@ -12,7 +12,6 @@ class Ship
   end
 
   def hit
-    # return if sunk?
     @health -= 1 unless sunk?
   end
 end

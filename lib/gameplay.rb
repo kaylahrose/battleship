@@ -3,7 +3,7 @@ require './lib/ship'
 require './lib/cell'
 class Gameplay
   attr_reader :comp_board, :player_board, :comp_cruiser, :comp_submarine,
-                :player_cruiser, :player_submarine, :input, :shot
+              :player_cruiser, :player_submarine, :input, :shot
 
   def initialize
     @comp_board = Board.new
@@ -20,13 +20,11 @@ class Gameplay
     welcome_message
     input = gets.strip.downcase
     if input == 'p'
-      if comp_board.cells.any? { |coordinate, cell| cell.fired_upon? }
-        Gameplay.new.setup
-      end
+      Gameplay.new.setup if comp_board.cells.any? { |_coordinate, cell| cell.fired_upon? }
       setup
       play
     elsif input == 'q'
-      abort 
+      abort
     else
       puts 'please only enter: p or q'
       main_menu
@@ -56,7 +54,7 @@ class Gameplay
     puts "\n"
   end
 
-  def validate_cruiser(input)
+  def validate_cruiser(_input)
     until @input.all? { |coordinate| player_board.valid_coordinate?(coordinate) }
       puts 'invalid, please try again'
       @input = gets.strip.upcase.split
@@ -68,7 +66,7 @@ class Gameplay
     end
   end
 
-  def validate_sub(input)
+  def validate_sub(_input)
     until @input.all? { |coordinate| player_board.valid_coordinate?(coordinate) } && player_board.place(player_submarine, @input)
       puts 'invalid, please try again'
       @input = gets.strip.upcase.split
@@ -104,11 +102,10 @@ class Gameplay
     validate_fired_upon
   end
 
-
   def validate_coordinate
     # refactor opportunity error message
     until comp_board.valid_coordinate?(@shot)
-      puts "invalid, please try again"
+      puts 'invalid, please try again'
       fire_input
     end
   end
@@ -155,7 +152,7 @@ class Gameplay
     comp_submarine.sunk? && comp_cruiser.sunk?
   end
 
-  def hit_or_miss_comp(shot)
+  def hit_or_miss_comp(_shot)
     if !comp_board.cells[@shot].empty? && comp_board.cells[@shot].ship.sunk?
       'sunk my ship!'
     elsif !comp_board.cells[@shot].empty?
@@ -179,15 +176,15 @@ class Gameplay
 
   def welcome_message
     puts "                                                                       \n" +
-    "                                                                       \n" +
-    "                                                                       \n" +
+         "                                                                       \n" +
+         "                                                                       \n" +
          "                                                                       \n" +
          "======================== Welcome to BATTLESHIP ========================\n" +
          "                                                                       \n" +
          "                                                                       \n" +
          "                                                                       \n" +
          " \n"
-          sleep(2)
+    sleep(2)
     puts 'Enter p to play. Enter q to quit.'
   end
 
@@ -198,31 +195,26 @@ class Gameplay
     puts comp_board.board_render
     puts "\n"
     puts "You now need to lay out your two ships.\n"
-    # sleep(2)
     puts 'The Cruiser is three units long and the Submarine is two units long.'
     puts "\n"
-    # sleep(2)
     puts player_board.board_render
     puts 'Enter the squares for the Cruiser (3 spaces):'
   end
 
   def you_won_message
     sleep(2)
-      puts "\n"
-      puts "                                                                       \n" +
-           "                                                                       \n" +
-           "                                                                       \n" +
-           "                                                                       \n" +
-           "============================== You Won! ===============================\n" +
-           "                                                                       \n" +
-           "                                                                       \n" +
-           "                                                                       \n" +
-           " \n"
-      puts "You won!"
-            puts "\n"
-      sleep(2)
-  
-
+    puts "\n"
+    puts "                                                                       \n" +
+         "                                                                       \n" +
+         "                                                                       \n" +
+         "                                                                       \n" +
+         "============================== You Won! ===============================\n" +
+         "                                                                       \n" +
+         "                                                                       \n" +
+         "                                                                       \n" +
+         " \n"
+    puts "\n"
+    sleep(2)
   end
 
   def i_won_message
