@@ -184,7 +184,6 @@ class Gameplay
          "                                                                       \n" +
          "                                                                       \n" +
          " \n"
-    sleep(2)
     puts 'Enter p to play. Enter q to quit.'
   end
 
