@@ -6,8 +6,8 @@ class Gameplay
               :player_cruiser, :player_submarine, :input, :shot
 
   def initialize
-    @comp_board = Board.new
-    @player_board = Board.new
+    # @comp_board = Board.new("4","4")
+    # @player_board = Board.new("4","4")
     @comp_cruiser = Ship.new('Cruiser', 3)
     @comp_submarine = Ship.new('Submarine', 2)
     @player_cruiser = Ship.new('Cruiser', 3)
@@ -20,7 +20,7 @@ class Gameplay
     welcome_message
     input = gets.strip.downcase
     if input == 'p'
-      Gameplay.new.setup if comp_board.cells.any? { |_coordinate, cell| cell.fired_upon? }
+      # Gameplay.new.setup if comp_board.cells.any? { |_coordinate, cell| cell.fired_upon? }
       setup
       play
     elsif input == 'q'
@@ -32,6 +32,18 @@ class Gameplay
   end
 
   def setup
+    puts "please enter your desired dimensions.\n" +
+    "For example, if I wanted to play on a 4x4 grid,\n"+
+    "I might enter 4 4."
+    # require 'pry'; binding.pry
+    dimensions = gets.strip.split
+    # require 'pry'; binding.pry
+    width = dimensions[0]
+    height = dimensions[1]
+
+    @comp_board = Board.new(width, height)
+    @player_board = Board.new(width, height)
+    # require 'pry'; binding.pry
     computer_setup
     player_setup
   end

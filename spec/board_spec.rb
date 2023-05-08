@@ -11,7 +11,6 @@ RSpec.describe Board do
 
   it 'has a hash of cells' do
     board = Board.new("4","4")
-    # require 'pry'; binding.pry
 
     expect(board.cells).to be_an_instance_of(Hash)
     expect(board.cells.keys.length).to eq(16)
@@ -64,28 +63,27 @@ RSpec.describe Board do
   it 'separates coordinates' do
     board = Board.new("4","4")
     board.separate_coordinates(%w[A1 A2])
-    # require 'pry'; binding.pry
     expect(board.letter).to eq(%w[A A])
   end
 
-  xit 'returns if coordinates are consecutive by number' do
-    board = Board.new
+  it 'returns if coordinates are consecutive by number' do
+    board = Board.new("4","4")
     board.separate_coordinates(%w[A1 A2])
     expect(board.consec_coord_num?).to eq(true)
     board.separate_coordinates(%w[A2 B2])
     expect(board.consec_coord_num?).to eq(false)
   end
 
-  xit 'returns if coordinates are consecutive by letter' do
-    board = Board.new
+  it 'returns if coordinates are consecutive by letter' do
+    board = Board.new("4","4")
     board.separate_coordinates(%w[A1 A2])
     expect(board.consec_coord_letter?).to eq(false)
     board.separate_coordinates(%w[A2 B2])
     expect(board.consec_coord_letter?).to eq(true)
   end
 
-  xit 'validates placement no diagonal coordinates' do
-    board = Board.new
+  it 'validates placement no diagonal coordinates' do
+    board = Board.new("4","4")
     cruiser = Ship.new('Cruiser', 3)
     submarine = Ship.new('Submarine', 2)
 
@@ -93,8 +91,8 @@ RSpec.describe Board do
     expect(board.valid_placement?(submarine, %w[C2 D3])).to eq(false)
   end
 
-  xit 'validates placement example true' do
-    board = Board.new
+  it 'validates placement example true' do
+    board = Board.new("4","4")
     cruiser = Ship.new('Cruiser', 3)
     submarine = Ship.new('Submarine', 2)
 
@@ -104,8 +102,8 @@ RSpec.describe Board do
     expect(board.valid_placement?(cruiser, %w[A1 D1 C1])).to eq(false)
   end
 
-  xit 'places cruiser on board' do
-    board = Board.new
+  it 'places cruiser on board' do
+    board = Board.new("4","4")
     cruiser = Ship.new('Cruiser', 3)
     board.place(cruiser, %w[A1 A2 A3])
 
@@ -120,8 +118,8 @@ RSpec.describe Board do
     expect(board.place(cruiser, %w[A1 A4 A3])).to eq(false)
   end
 
-  xit 'checks if same ship on different cells' do
-    board = Board.new
+  it 'checks if same ship on different cells' do
+    board = Board.new("4","4")
     cruiser = Ship.new('Cruiser', 3)
     board.place(cruiser, %w[A1 A2 A3])
     cell_1 = board.cells['A1']
@@ -131,8 +129,8 @@ RSpec.describe Board do
     expect(cell_3.ship == cell_2.ship).to eq(true)
   end
 
-  xit 'checks for overlap' do
-    board = Board.new
+  it 'checks for overlap' do
+    board = Board.new("4","4")
     cruiser = Ship.new('Cruiser', 3)
 
     board.place(cruiser, %w[A1 A2 A3])
@@ -145,14 +143,14 @@ RSpec.describe Board do
     expect(board.overlap?(%w[A1 B1])).to eq(true)
   end
 
-  xit 'renders cells by row' do
-    board = Board.new
+  it 'renders cells by row' do
+    board = Board.new("4","4")
     expect(board.row_render(false, 'A')).to eq('. . . .')
     expect(board.row_render(true, 'A')).to eq('. . . .')
   end
 
-  xit 'can render board' do
-    board = Board.new
+  it 'can render board' do
+    board = Board.new("4","4")
     cruiser = Ship.new('Cruiser', 3)
     board.place(cruiser, %w[A1 A2 A3])
     expect(board.board_render).to eq("  1 2 3 4 \n" +
@@ -162,8 +160,8 @@ RSpec.describe Board do
                               "D . . . . \n")
   end
 
-  xit 'can render board(true)' do
-    board = Board.new
+  it 'can render board(true)' do
+    board = Board.new("4","4")
     cruiser = Ship.new('Cruiser', 3)
     board.place(cruiser, %w[A1 A2 A3])
 
@@ -174,7 +172,7 @@ RSpec.describe Board do
                                     "D . . . . \n")
   end
 
-  xit 'randomly places ships' do
+  it 'randomly places ships' do
     # blarg test random array sample
     # possible_arrays could look like
     #  [["A1", "A2", "A3"],
@@ -193,7 +191,7 @@ RSpec.describe Board do
     #  ["B3", "C3", "D3"],
     #  ["A4", "B4", "C4"],
     #  ["B4", "C4", "D4"]]
-    board = Board.new
+    board = Board.new("4","4")
     cruiser = Ship.new('Cruiser', 3)
     submarine = Ship.new('Submarine', 2)
     board.random_place(cruiser)
